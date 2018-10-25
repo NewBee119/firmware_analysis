@@ -1,0 +1,12 @@
+<?
+	$wps_enable = get("x","/wireless/wps/enable");
+	$wps_configured = get("x","/wireless/wps/configured");
+	$wps_pin = get("x","/wireless/wps/pin");
+	
+	echo "<wps_config>";
+	echo 	"<enable>".$wps_enable."</enable>";
+	echo	"<ap_locked>".$ap_locked."</ap_locked>";
+	echo 	"<configured>".$wps_configured."</configured>";
+	echo	"<pin>".$wps_pin."</pin>";
+	echo "</wps_config>";
+?>

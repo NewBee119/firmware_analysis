@@ -1,0 +1,2 @@
+ATT:001>$0 port scan attack from $1 (ip:$2) detected.
+ATT:002>$0 flooding attack from $1 (ip:$2) detected.

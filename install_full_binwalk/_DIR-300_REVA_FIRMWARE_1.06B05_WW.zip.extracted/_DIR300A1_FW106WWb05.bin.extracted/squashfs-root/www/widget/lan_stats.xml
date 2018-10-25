@@ -1,0 +1,24 @@
+<?
+	$lan_ip = get("x","/lan/ethernet/ip");
+	$lan_mask = get("x","/lan/ethernet/netmask");
+	$dns_relay_enable = get("x","/dnsrelay/mode");
+	$lan_tx_packet = get("x","/runtime/stats/lan/tx/packets");
+	$lan_rx_packet = get("x","/runtime/stats/lan/rx/packets");
+
+	$lan_collision_packets = get("x","/runtime/stats/lan/tx/collisions");
+	$lan_tx_bytes = get("x","/runtime/stats/lan/tx/bytes");
+	$lan_rx_bytes = get("x","/runtime/stats/lan/rx/bytes");
+	
+	echo "<lan_stats>";
+	echo 	"<lan_ip>".$lan_ip."</lan_ip>";
+	echo 	"<lan_netmask>".$lan_mask."</lan_netmask>";
+	echo	"<dns_relay_enable>".$dns_relay_enable."</dns_relay_enable>";
+	echo 	"<lan_tx_packets>".$lan_tx_packet."</lan_tx_packets>";
+	echo 	"<lan_rx_packets>".$lan_rx_packet."</lan_rx_packets>";
+	echo	"<lan_lost_packets>".$lan_lost_packets."</lan_lost_packets>";
+	echo	"<lan_collision_packets>".$lan_collision_packets."</lan_collision_packets>";
+	echo	"<lan_tx_bytes>".$lan_tx_bytes."</lan_tx_bytes>";
+	echo	"<lan_rx_bytes>".$lan_rx_bytes."</lan_rx_bytes>";
+	echo	"<timestamp>".$timestamp."</timestamp>";
+	echo "</lan_stats>";
+?>

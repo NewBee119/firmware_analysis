@@ -1,0 +1,32 @@
+#!/bin/sh
+usage="Usage: time [-g|-s] [xml node]"
+case "$1" in
+"-g")
+	echo [$0] get from script is deprecated !! > /dev/console
+	;;
+"-s")
+	/etc/templates/timezone.sh
+	sleep 1
+	case "$2" in
+	time)
+		D=`date +%Y.%m.%d`
+		date -s "$D-$3" > /dev/console 2>&1
+		rgdb -i -s /runtime/time/time "$3"
+		;;
+	date)
+		Y=`echo $3 | cut -d/ -f3`
+		M=`echo $3 | cut -d/ -f1`
+		D=`echo $3 | cut -d/ -f2`
+		T=`date +%H:%M:%S`
+		date -s "$Y.$M.$D-$T" > /dev/console 2>&1
+		rgdb -i -s /runtime/time/date "$3"
+		;;
+	*)
+		echo $usage > /dev/console
+		;;
+	esac
+	;;
+*)
+	echo $usage > /dev/console
+	;;
+esac

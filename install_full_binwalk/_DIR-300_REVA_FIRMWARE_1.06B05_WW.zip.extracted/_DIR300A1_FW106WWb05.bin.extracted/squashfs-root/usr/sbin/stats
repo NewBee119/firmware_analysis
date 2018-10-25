@@ -1,0 +1,39 @@
+#!/bin/sh
+usage="Usage: stats [-g|-s] [xml node]"
+case "$1" in
+-g)
+	echo [$0] get from script is deprecated !! > /dev/console
+	;;
+-s)
+	case "$2" in
+	getrouteinfo)
+		/usr/sbin/routetable
+		;;
+	naptsession)
+		/usr/sbin/asession
+		;;
+	resetcounter)
+		echo `rgdb -i -g /runtime/wan/inf:1/interface` > /proc/driver/ifresetcnt
+		rgdb -i -s /runtime/stats/wan/inf:1/rx/packets 0
+		rgdb -i -s /runtime/stats/wan/inf:1/tx/packets 0
+		echo `rgdb -i -g /runtime/layout/lanif` > /proc/driver/ifresetcnt
+		rgdb -i -s /runtime/stats/lan/rx/packets 0
+		rgdb -i -s /runtime/stats/lan/tx/packets 0
+		echo `rgdb -i -g /runtime/layout/wlanif` > /proc/driver/ifresetcnt
+		rgdb -i -s /runtime/stats/wireless/rx/packets 0
+		rgdb -i -s /runtime/stats/wireless/tx/packets 0
+		test -f /etc/templates/wlan_resetcnt.sh && /etc/templates/wlan_resetcnt.sh
+		test -f /etc/templates/switch_resetcnt.sh && /etc/templates/switch_resetcnt.sh
+		;;
+	*)
+		echo $usage > /dev/console
+		exit 9
+		;;
+	esac
+	;;
+*)
+	echo $usage > /dev/console
+	exit 9
+	;;
+esac
+exit 0

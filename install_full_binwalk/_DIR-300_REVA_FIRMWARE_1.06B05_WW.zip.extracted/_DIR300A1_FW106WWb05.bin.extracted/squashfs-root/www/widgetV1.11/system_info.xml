@@ -1,0 +1,157 @@
+<?
+	/*----- Modified baseed on SPEC ver 1.11 ( Kloat Liu, Mon Apr 12 11:28:49 CST 2010) ----*/ 
+	/*0: disconnect, 1:100Full, 2: 100half, 3: 10 full, 4: 10half*/
+	$port1_link = get("x","/runtime/switch/port:1/linktype");
+	$port2_link = get("x","/runtime/switch/port:2/linktype");
+	$port3_link = get("x","/runtime/switch/port:3/linktype");
+	$port4_link = get("x","/runtime/switch/port:4/linktype");
+	$wan_link = get("x","/runtime/switch/wan_port");
+
+	if($wan_link == "0")
+	{
+		$wan_status = "Disconnected";
+	}
+	else if($wan_link == "1")
+	{
+		$wan_status = "100M";
+	}
+	else if($wan_link == "2")
+	{
+		$wan_status = "100M";
+	}
+	else if($wan_link == "3")
+	{
+		$wan_status = "10M";
+	}
+	else if($wan_link == "4")
+	{
+		$wan_status = "10M";
+	}
+	if($port1_link == 0)
+	{
+		$port1_status = "Disconnected";
+	}
+	else
+	{
+		$port1_status = "Connected";
+	}
+	if($port2_link == 0)
+	{
+		$port2_status = "Disconnected";
+	}
+	else
+	{
+		$port2_status = "Connected";
+	}
+	if($port3_link == 0)
+	{
+		$port3_status = "Disconnected";
+	}
+	else
+	{
+		$port3_status = "Connected";
+	}
+	if($port4_link == 0)
+	{
+		$port4_status = "Disconnected";
+	}
+	else
+	{
+		$port4_status = "Connected";
+	}
+
+	$lan_mac = get("x","/runtime/layout/lanmac");
+	$wan_mac = get("x","/runtime/wan/inf:1/mac");
+	$vendor_name = get("x", "/sys/vendor");
+	$product_name = get("x","/sys/modelname");
+	$device_name = get("x", "/sys/devicename");
+	$hardware_version = get("x", "/sys/hwversion");
+	$firmware_version_major = get("x","/runtime/sys/info/fwmajor");
+	$firmware_version_minor = get("x", "/runtime/sys/info/fwminor");
+	$firmware_version_build = get("x","/runtime/sys/info/firmwarebuildno");
+	$firmware_version_region = "";
+	$fw_year = get("x", "/runtime/sys/info/fwyear");
+	$fw_month = get("x", "/runtime/sys/info/fwmonth");
+	if($fw_month == "Jan")		{ $fw_month = "01"; }
+	else if($fw_month == "Feb")	{ $fw_month = "02"; }
+	else if($fw_month == "Mar")	{ $fw_month = "03"; }
+	else if($fw_month == "Apr")	{ $fw_month = "04"; }
+	else if($fw_month == "May")	{ $fw_month = "05"; }
+	else if($fw_month == "June")	{ $fw_month = "06"; }
+	else if($fw_month == "July")	{ $fw_month = "07"; }
+	else if($fw_month == "Aug")	{ $fw_month = "08"; }
+	else if($fw_month == "Sept")	{ $fw_month = "09"; }
+	else if($fw_month == "Oct")	{ $fw_month = "10"; }
+	else if($fw_month == "Nov")	{ $fw_month = "11"; }
+	else if($fw_month == "Dec")	{ $fw_month = "12"; }
+	$fw_day = get("x", "/runtime/sys/info/fwday");
+	$firmware_version_date = $fw_year."/".$fw_month."/".$fw_day;
+	$firmware_url = "";
+	$firmware_update_info_url = get("x","/sys/fwinfosrv").get("x","/sys/fwinfopath");
+	$firmware_notify_enable = "0";
+	$firmware_notify_interval = "0";
+	$language_pack = get("x", "/sys/langcode");
+	if($language_pack == "")
+	{
+		$language_pack = "EN";
+	}
+	$language_pack_version_major = "";
+	$language_pack_version_minor = "";
+	$language_pack_version_date = "";
+	$language_pack_url = "";
+	$language_pack_update_info_url = "";
+	$language_pack_notify_enable = "0";
+	$multi_language = get("x", "/runtime/sys/info/langs");
+	$multi_language_selection = $language_pack;
+
+	echo "<system_info>";
+	echo 	"<vendor_name>".$vendor_name."</vendor_name>";
+	echo 	"<product_name>".$product_name."</product_name>";
+	echo 	"<device_name>".$device_name."</device_name>";
+	echo	"<hardware_version>".$hardware_version."</hardware_version>";
+	echo	"<firmware_version_major>".$firmware_version_major."</firmware_version_major>";
+	echo	"<firmware_version_minor>".$firmware_version_minor."</firmware_version_minor>";
+	echo	"<firmware_version_build>".$firmware_version_build."</firmware_version_build>";
+	echo	"<firmware_version_region>".$firmware_version_region."</firmware_version_region>";//NA,EU,WW,EA
+	echo	"<firmware_version_date>".$firmware_version_date."</firmware_version_date>";//yyyy/mm/dd
+	echo	"<firmware_url>".$firmware_url."</firmware_url>";
+	echo	"<frimware_update_info_url>".$firmware_update_info_url."</frimware_update_info_url>";
+	echo	"<firmware_notify_enable>".$firmware_notify_enable."</firmware_notify_enable>";
+	echo	"<firmware_notify_interval>".$firmware_notify_interval."</firmware_notify_interval>";
+	echo	"<language_pack>".$language_pack."</language_pack>";//TW,FR,KR,DE
+	echo	"<language_pack_version_major>".$language_pack_version_major."</language_pack_version_major>";//1
+	echo	"<language_pack_version_minor>".$language_pack_version_minor."</language_pack_version_minor>";//1
+	echo	"<language_pack_version_date>".$language_pack_version_date."</language_pack_version_date>";//yyyy/mm/dd
+	echo	"<language_pack_url>".$language_pack_url."</language_pack_url>";//any URL
+	echo	"<language_pack_update_info_url>".$language_pack_update_info_url."</language_pack_update_info_url>";//any URL
+	echo	"<language_pack_notify_enable>".$language_pack_notify_enable."</language_pack_notify_enable>";//bool 0:1
+	echo	"<multi_language>".$multi_language."</multi_language>";
+	echo	"<multi_language_selection>".$multi_language_selection."</multi_language_selection>";
+	echo 	"<lan_mac>".$lan_mac."</lan_mac>";
+	echo	"<wan_mac>".$wan_mac."</wan_mac>";
+	echo	"<wan_clone_mac_enable>".$wan_clone_mac_enable."</wan_clone_mac_enable>";
+	echo	"<wan_cloned_mac>".$wan_cloned_mac."</wan_cloned_mac>";
+	echo	"<wan_config_port_speed>".$wan_config_port_speed."</wan_config_port_speed>";
+	echo 	"<switch_port_0_status>";
+	echo 		"<name>LAN0</name>";
+	echo 		"<status>".$port1_status."</status>";
+	echo 	"</switch_port_0_status>";
+	echo 	"<switch_port_1_status>";
+	echo 		"<name>LAN1</name>";
+	echo    	"<status>".$port2_status."</status>";
+	echo 	"</switch_port_1_status>";
+	echo 	"<switch_port_2_status>";
+	echo 		"<name>LAN2</name>";
+	echo 		"<status>".$port3_status."</status>";
+	echo 	"</switch_port_2_status>";
+	echo 	"<switch_port_3_status>";
+	echo 		"<name>LAN3</name>";
+	echo    	"<status>".$port4_status."</status>";
+	echo 	"</switch_port_3_status>";
+	echo 	"<switch_port_4_status>";
+	echo		"<name>WAN0</name>";
+	echo		"<status>".$wan_status."</status>";
+	echo 	"</switch_port_4_status>";
+	echo	"<system_time>".$system_time."</system_time>";
+	echo "</system_info>";
+?>

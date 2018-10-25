@@ -1,0 +1,148 @@
+<?
+	$spi_en = get("x", "/security/dos/enable");
+	$mac_filter_en = get("x", "/security/macfilter/enable");
+	$mec_filter_act = get("x", "/security/macfilter/action");
+	if($mac_filter_en == 0)
+	{
+		$mac_filter_type = "disable";
+	}
+	else
+	{
+		if($mac_filter_act == 0)
+		{
+			$mac_filter_type = "deny";
+		}
+		else
+		{
+			$mac_filter_type = "allow";
+		}
+	}
+	echo "<filter_config>";
+	echo 	"<filter_spi_enable>".$spi_en."</filter_spi_enable>";
+	//MAC Filter
+	for("/security/macfilter/entry")
+	{
+		echo "<mac_filter_".$InDeX.">";
+		echo	"<mac_filter_type>".$mac_filter_type."</mac_filter_type>";
+		echo	"<name>".get("x", "/description")."</name>";
+		echo	"<mac>".get("x", "/mac")."</mac>";
+		echo	"<schedule_name>".get("x", "/schedule/id")."</schedule_name>";
+		echo "</mac_filter_".$InDeX.">";
+	}
+	//Firewall
+	for("/security/firewall/entry")
+	{
+		echo "<protocol_filter_".$InDeX.">";
+		$proto_en = get("x", "/enable");
+		$proto_act = get("x", "/action");
+		$proto_name = get("x", "/description");
+		$proto_proto = get("x", "/protocol");
+		if($proto_proto == 1)
+		{
+			$proto_str = "ALL";
+		}
+		else if($proto_proto == 2)
+		{
+			$proto_str = "TCP";
+		}
+		else if($proto_proto == 3)
+		{
+			$proto_str = "UDP";
+		}
+		else if($proto_proto == 4)
+		{
+			$proto_str = "ICMP";
+		}
+		if($proto_en == 0)
+		{
+			$proto_type = "disable";
+		}
+		else
+		{
+			if($proto_act == 0)
+			{
+				$proto_type = "deny";
+			}
+			else
+			{
+				$proto_type = "allow";
+			}
+		}
+		$proto_src_iptype = get("x", "/src/iptype");
+		if($proto_src_iptype == 3)
+		{
+			$proto_src_ip = get("x", "/src/startip")."-".get("x", "/src/endip");
+		}
+		else
+		{
+			$proto_src_ip = get("x", "/src/startip");
+		}
+		$proto_src_start_port = get("x", "/src/startport");
+		$proto_src_end_port = get("x", "/src/endport");
+		$proto_src_port_type = get("x", "/dst/prottype");
+		if($proto_src_port_type == 3)
+		{
+			$proto_src_port = $proto_src_start_port."-",$proto_src_end_prot;
+		}
+		else
+		{
+			$proto_src_port = $proto_src_start_prot;
+		}
+		//dst settings
+		$proto_dst_iptype = get("x", "/dst/iptype");
+		if($proto_dst_iptype == 3)
+		{
+			$proto_dst_ip = get("x", "/dst/startip")."-".get("x", "/dst/endip");
+		}
+		else
+		{
+			$proto_dst_ip = get("x", "/dst/startip");
+		}
+		$proto_dst_start_port = get("x", "/dst/startport");
+		$proto_dst_end_port = get("x", "/dst/endport");
+		$proto_dst_port_type = get("x", "/dst/prottype");
+		if($proto_dst_port_type == 3)
+		{
+			$proto_dst_port = $proto_dst_start_port."-",$proto_dst_end_prot;
+		}
+		else
+		{
+			$proto_src_port = $proto_src_start_prot;
+		}
+		echo	"<protocol_type>".$proto_type."</protocol_type>";
+		echo	"<name>".$proto_name."</name>";
+		echo	"<local_ip_range>".$proto_src_ip."</local_ip_range>";
+		echo	"<remote_ip_range>".$proto_dst_ip."</remote_ip_range>";
+		echo	"<port_range>".$proto_dst_port."</port_range>";
+		echo	"<schedule_name>".get("x", "/schedule/id")."</schedule_name>";
+		echo "</protocol_filter_".$InDeX.">";
+	}
+	//URL Filter
+	$url_en = get("x", "/security/urlblocking/enable");
+	$url_act = get("x", "/security/urlblocking/action");
+	if($url_en == 0)
+	{
+		$url_type = "disable";
+	}
+	else
+	{
+		if($url_act == 0)
+		{
+			$url_type = "deny";
+		}
+		else
+		{
+			$url_type = "allow";
+		}
+	}
+	for("/security/urlblocking/entry")
+	{
+		echo "<url_domain_filter_".$InDeX.">";
+		echo	"<filter_type>".$url_type."</filter_type>";
+		echo	"<name>".get("x", "/description")."</name>";
+		echo	"<url_string>".get("x", "/url")."</url_string>";
+		echo	"<schedule_name>".get("x", "/schedule/id")."</schedule_name>";
+		echo "</mac_filter_".$InDeX.">";
+	}
+	echo "</filter_config>";
+?>

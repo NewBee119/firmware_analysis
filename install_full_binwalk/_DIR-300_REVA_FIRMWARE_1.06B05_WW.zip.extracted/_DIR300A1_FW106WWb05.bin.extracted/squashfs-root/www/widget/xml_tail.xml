@@ -1,0 +1,4 @@
+<?
+$xml_tail = fread("/www/widget/__xml_tail.php");
+echo $xml_tail;
+?>

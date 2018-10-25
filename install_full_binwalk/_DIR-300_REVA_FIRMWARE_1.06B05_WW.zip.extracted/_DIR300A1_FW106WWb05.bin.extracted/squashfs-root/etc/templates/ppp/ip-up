@@ -1,0 +1,35 @@
+#!/bin/sh
+echo [$0]: ifname[$1] device[$2] speed[$3] ip[$4] remote[$5] param[$6] > /dev/console
+
+# Check if WAN up is in progress
+while [ -f /var/run/wan_up_running ]; do
+	echo "[$0] wan up is running, wait 1 sec. !!!" > /dev/console
+	sleep 1
+done
+
+# Clear, it's our turn.
+echo "running" > /var/run/wan_up_running
+
+WANIF="/runtime/wan/inf:1"
+if [ -f /var/etc/ppp/resolv.conf.$6 ]; then
+	dns1=`scut -p nameserver /var/etc/ppp/resolv.conf.$6 | pfile -l1`
+	dns2=`scut -p nameserver /var/etc/ppp/resolv.conf.$6 | pfile -l2`
+	wins1=`scut -p winsserver /var/etc/ppp/resolv.conf.$6 | pfile -l1`
+	wins2=`scut -p winsserver /var/etc/ppp/resolv.conf.$6 | pfile -l2`
+fi
+rgdb -i -s $WANIF/connectstatus connected
+rgdb -i -s $WANIF/ip "$4"
+rgdb -i -s $WANIF/netmask "255.255.255.255"
+rgdb -i -s $WANIF/gateway "$5"
+rgdb -i -s $WANIF/primarydns "$dns1"
+rgdb -i -s $WANIF/secondarydns "$dns2"
+rgdb -i -s $WANIF/domain ""
+rgdb -i -s $WANIF/interface "$1"
+rgdb -i -s $WANIF/uptime `uptime seconly`
+rgdb -i -s $WANIF/primarywins "$wins1"
+rgdb -i -s $WANIF/secondarywins "$wins2"
+
+rgdb -A /etc/templates/ppp/session_up.php -V session=$6 > /var/run/session_up.sh
+sh /var/run/session_up.sh $6 $1 > /dev/console
+rm -f /var/run/wan_up_running
+exit 0

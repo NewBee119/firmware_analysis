@@ -1,0 +1,8 @@
+DRP:001>Drop $0 packet from $1 (src:$2:$3, dst:$4:$5) by default rule.
+DRP:002>Drop illegal $0 packet from $1 (src:$2$3, dst:$4$5).
+DRP:003>Drop/Reject PING request from $1 (ip:$2).
+DRP:004>Drop/Reject $0 packet from $1 (src:$2:$3, dst:$4:$5) by MAC filter rule.
+DRP:005>Drop/Reject $0 packet from $1 (src:$2:$3, dst:$4:$5) by IP filter rule.
+DRP:006>Drop/Reject $0 packet from $1 (src:$2:$3, dst:$4:$5) by firewall rule.
+DRP:007>Drop/Reject $0 packet from $1 (src:$2:$3, dst:$4:$5) by blocking rule.
+DRP:008>Drop/Reject $0 packet from $1 (src:$2:$3, dst:$4:$5) by Access Control rule.

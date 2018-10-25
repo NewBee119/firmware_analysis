@@ -1,0 +1,446 @@
+***Firmware Directory***
+../install_full_binwalk/_DIR-300_REVA_FIRMWARE_1.06B05_WW.zip.extracted/_DIR300A1_FW106WWb05.bin.extracted/squashfs-root/
+***Search for password files***
+##################################### passwd
+
+##################################### shadow
+
+##################################### *.psk
+
+***Search for Unix-MD5 hashes***
+
+
+***Search for SSL related files***
+##################################### *.crt
+
+##################################### *.pem
+
+##################################### *.cer
+
+##################################### *.p7b
+
+##################################### *.p12
+
+##################################### *.key
+
+
+***Search for SSH related files***
+##################################### authorized_keys
+
+##################################### *authorized_keys*
+
+##################################### host_key
+
+##################################### *host_key*
+
+##################################### id_rsa
+
+##################################### *id_rsa*
+
+##################################### id_dsa
+
+##################################### *id_dsa*
+
+##################################### *.pub
+
+
+***Search for files***
+##################################### *.conf
+/etc/resolv.conf
+/etc/netsniper/pers.conf
+/etc/netsniper/pers_isn.conf
+
+##################################### *.cfg
+
+##################################### *.ini
+
+
+***Search for database related files***
+##################################### *.db
+
+##################################### *.sqlite
+
+##################################### *.sqlite3
+
+
+***Search for shell scripts***
+##################################### shell scripts
+/etc/scripts/system.sh
+/etc/scripts/config.sh
+/etc/scripts/layout.sh
+/etc/scripts/dislan.sh
+/etc/scripts/enlan.sh
+/etc/scripts/startburning.sh
+/etc/scripts/misc/preupgrade.sh
+/etc/scripts/misc/freset.sh
+/etc/scripts/misc/ver.sh
+/etc/scripts/misc/setwantype.sh
+/etc/scripts/misc/profile.sh
+/etc/scripts/misc/haltdemand.sh
+/etc/scripts/misc/telnetd.sh
+/etc/scripts/misc/nreboot.sh
+/etc/scripts/misc/defnodes.sh
+/etc/templates/lpd.sh
+/etc/templates/dnsmasq.sh
+/etc/templates/rg.sh
+/etc/templates/dyndns.sh
+/etc/templates/lld2d.sh
+/etc/templates/dhcpd.sh
+/etc/templates/wandown.sh
+/etc/templates/upnpd.sh
+/etc/templates/gzone.sh
+/etc/templates/igmpproxy_helper.sh
+/etc/templates/logs.sh
+/etc/templates/dnrd.sh
+/etc/templates/wanup.sh
+/etc/templates/wps.sh
+/etc/templates/wakeup.sh
+/etc/templates/enable_gzone.sh
+/etc/templates/timezone.sh
+/etc/templates/webs.sh
+/etc/templates/dyndns_test.sh
+/etc/templates/route.sh
+/etc/templates/restart_ap.sh
+/etc/templates/igmpproxy.sh
+/etc/templates/firmware.sh
+/etc/templates/upnpd/NOTIFY.WANEthernetLinkConfig.1.sh
+/etc/templates/upnpd/NOTIFY.WANIPConnection.1.sh
+/etc/templates/upnpd/NOTIFY.WANCommonInterfaceConfig.1.sh
+/etc/templates/upnpd/NOTIFY.OSInfo.1.sh
+/etc/templates/upnpd/NOTIFY.WFAWLANConfig.1.sh
+/etc/templates/upnpd/NOTIFY.Layer3Forwarding.1.sh
+/etc/templates/upnpd/M-SEARCH.sh
+/etc/templates/upnpd/NOTIFY.sh
+/etc/templates/qos.sh
+/etc/templates/modules.sh
+/etc/templates/ntp.sh
+/etc/templates/neaps.sh
+/etc/templates/onlanchange.sh
+/etc/templates/ppp/pap_type.sh
+/etc/templates/ppp/pap_hack.sh
+/etc/templates/ppp/starspeed.sh
+/etc/templates/lan.sh
+/etc/templates/wan.sh
+/etc/templates/scheduled.sh
+/etc/templates/wlan.sh
+/etc/templates/wan_ppp.sh
+/etc/defnodes/S22setext.sh
+/etc/defnodes/S23langpack.sh
+/etc/defnodes/S10setext.sh
+/etc/defnodes/S20upnp_igd.sh
+/etc/defnodes/S31setext.sh
+/etc/defnodes/S21upnp_wfa.sh
+/etc/defnodes/S41setext.sh
+/etc/defnodes/S30setnode.sh
+/etc/init.d/S03config.sh
+/etc/init.d/S10system.sh
+
+***Search for other .bin files***
+##################################### bin files
+
+***Search for patterns in files***
+-------------------- upgrade --------------------
+/www/locale/en/tools_firmware.php
+/www/locale/en/dsc/dsc_sup_menu2.php
+/www/locale/en/dsc/dsc_spt_tools.php
+/www/locale/en/dsc/dsc_tools_firmware_fw_upgrade.php
+/www/locale/en/dsc/dsc_tools_firmware.php
+/www/locale/en/help/h_tools_firmware.php
+/www/locale/en/sys_fw_valid.php
+
+-------------------- admin --------------------
+/etc/templates/hnap/SetDeviceSettings2.php
+/sbin/httpd
+/www/locale/en/dsc/dsc_spt_tools.php
+/www/locale/en/dsc/dsc_tools_log_setting.php
+/www/locale/en/st_stats.php
+/www/locale/en/tools_admin.php
+/www/locale/en/permission.php
+/www/tools_admin.php
+
+-------------------- root --------------------
+/etc/templates/extensions/qos_run.php
+/etc/templates/wifi/wps.config.php
+/etc/templates/upnpd/__ACTION.GetDefaultConnectionService.php
+/etc/templates/upnpd/ACTION.L3Forwarding1.php
+/etc/templates/upnpd/setup.php
+/etc/templates/upnpd/ACTION.WANCommonIFC1.php
+/etc/templates/upnpd/NOTIFY.WANEthernetLinkConfig.1.sh
+/etc/templates/upnpd/run.M-SEARCH.services.php
+/etc/templates/upnpd/NOTIFY.WANIPConnection.1.sh
+/etc/templates/upnpd/ACTION.WANEthLinkC1.php
+/etc/templates/upnpd/NOTIFY.WANCommonInterfaceConfig.1.sh
+/etc/templates/upnpd/NOTIFY.OSInfo.1.sh
+/etc/templates/upnpd/run.M-SEARCH.uuid.php
+/etc/templates/upnpd/NOTIFY.WFAWLANConfig.1.sh
+/etc/templates/upnpd/run.M-SEARCH.devices.php
+/etc/templates/upnpd/NOTIFY.Layer3Forwarding.1.sh
+/etc/templates/upnpd/ACTION.OSInfo1.php
+/etc/templates/upnpd/ACTION.WFAWLANConfig1.php
+/etc/templates/upnpd/run.M-SEARCH.ssdpall.php
+/etc/templates/upnpd/__NOTIFY.alivebye.php
+/etc/templates/upnpd/ACTION.WANIPConn1.php
+/etc/templates/upnpd/__NOTIFY.common.php
+/etc/templates/upnpd/__M-SEARCH.common.php
+/etc/templates/upnpd/NOTIFY.Layer3Forwarding.1.php
+/etc/templates/upnpd/run.M-SEARCH.rootdevice.php
+/etc/defnodes/S20upnp_igd.sh
+/etc/defnodes/S21upnp_wfa.sh
+/htdocs/web/upnp/WFADevice.xml
+/htdocs/web/upnp/InternetGatewayDevice.xml
+/htdocs/upnp/L3Forwarding1.upnp
+/htdocs/upnp/WANCommonIFC1.upnp
+/htdocs/upnp/WFAWLANConfig1.upnp
+/htdocs/upnp/OSInfo1.upnp
+/htdocs/upnp/WANEthLinkC1.upnp
+/htdocs/upnp/WANIPConn1.upnp
+/bin/busybox
+/usr/sbin/xmldb
+/usr/sbin/upnpkits
+/usr/sbin/iptables
+/usr/sbin/ip
+/usr/sbin/rgbin
+/usr/sbin/lld2d
+/usr/sbin/wps
+/usr/sbin/pppd
+/usr/sbin/tc
+/usr/sbin/dnrd
+/lib/modules/ar231x_access.o
+
+-------------------- password --------------------
+/etc/templates/httpd/httpasswd.php
+/etc/templates/wan_ppp_run.php
+/etc/templates/hnap/SetDeviceSettings.php
+/etc/templates/hnap/SetWanSettings.php
+/etc/templates/hnap/GetWanSettings.php
+/etc/templates/neaps/neaps_conf.php
+/etc/templates/wan_dhcp.php
+/etc/templates/webs.sh
+/etc/templates/wan_ppp3g.php
+/etc/templates/wan_static.php
+/etc/templates/wan_dhcpplus.php
+/etc/templates/ppp/pap_hack.sh
+/etc/templates/ppp/starspeed.sh
+/etc/templates/wan_pppoe.php
+/etc/templates/wan_ip_setup.php
+/etc/templates/misc/firmware_run.php
+/etc/templates/misc/dyndns_run.php
+/etc/templates/misc/dyndns_test_run.php
+/etc/defnodes/S31setext.sh
+/etc/tlogs/sysact.tmp
+/sbin/atp
+/usr/sbin/syslog
+/usr/sbin/neaps
+/usr/sbin/sendmail
+/usr/sbin/rgbin
+/usr/sbin/wps
+/usr/sbin/pppd
+/usr/sbin/submit
+/usr/sbin/dhcpplus
+/usr/sbin/peanut
+/usr/sbin/starspeed
+/usr/sbin/hostapd
+/usr/sbin/dyndns
+/usr/sbin/telnetd
+/www/wiz_wan_4_pppoe.php
+/www/locale/en/wiz_wlan_2_wpa.php
+/www/locale/en/login_fail.php
+/www/locale/en/msg_wiz_wlan_0_flowchart.php
+/www/locale/en/wiz_wan_4_pppoe.php
+/www/locale/en/login.php
+/www/locale/en/log/sysact.tmp
+/www/locale/en/dsc/dsc_wiz_wlan_0_flowchart.php
+/www/locale/en/dsc/dsc_wiz_wan_4_pptp.php
+/www/locale/en/dsc/dsc_wiz_wlan_2_wpa.php
+/www/locale/en/dsc/dsc_wiz_wlan_2_wep.php
+/www/locale/en/dsc/dsc_spt_bsc.php
+/www/locale/en/dsc/dsc_spt_tools.php
+/www/locale/en/dsc/dsc_wiz_wan_4_pppoe.php
+/www/locale/en/dsc/dsc_tools_admin.php
+/www/locale/en/dsc/dsc_wiz_wan_0_flowchart.php
+/www/locale/en/dsc/dsc_wiz_wan_4_l2tp.php
+/www/locale/en/dsc/dsc_wiz_wan_1_password.php
+/www/locale/en/tools_log_setting.php
+/www/locale/en/wiz_wan_4_pptp.php
+/www/locale/en/bsc_wan.php
+/www/locale/en/tools_admin.php
+/www/locale/en/wiz_wan_3_sel_wan.php
+/www/locale/en/wiz_wlan_2_wep.php
+/www/locale/en/msg_comm.php
+/www/locale/en/wiz_wan_4_l2tp.php
+/www/locale/en/help/h_tools_admin.php
+/www/locale/en/tools_ddns.php
+/www/locale/en/wiz_wan_1_password.php
+/www/wiz_wan.php
+/www/login.php
+/www/post_login.xml
+/www/tools_log_setting.php
+/www/model/__g_var.php
+/www/wiz_wan_4_pptp.php
+/www/bsc_wan.php
+/www/tools_admin.php
+/www/auth/__login.php
+/www/auth/__authenticate_p.php
+/www/widgetV1.11/wan_stats.xml
+/www/widgetV1.11/ddns.xml
+/www/widgetV1.11/system_log.xml
+/www/__wiz_wan_action.php
+/www/wiz_wan_4_l2tp.php
+/www/tools_ddns.php
+/www/bsc_wlan.php
+/www/wiz_wan_1_password.php
+/lib/libc.so.0
+
+-------------------- passwd --------------------
+/sbin/atp
+/bin/busybox
+/usr/sbin/pppd
+/www/auth/__authenticate_p.php
+/lib/libc.so.0
+
+-------------------- pwd --------------------
+/bin/busybox
+/usr/sbin/dyndns
+/lib/libc.so.0
+
+-------------------- dropbear --------------------
+
+-------------------- ssl --------------------
+/etc/templates/hnap/GetDeviceSettings2.php
+/usr/sbin/wps
+
+-------------------- private key --------------------
+/usr/sbin/wps
+
+-------------------- telnet --------------------
+/etc/scripts/system.sh
+/www/__adv_port.php
+
+-------------------- secret --------------------
+/etc/templates/hnap/SetWLanRadioSecurity.php
+/etc/templates/hnap/SetWLanSecurity.php
+/etc/templates/hnap/GetWLanSecurity.php
+/etc/templates/hnap/GetWLanRadioSecurity.php
+/etc/templates/neaps/neaps_conf.php
+/etc/templates/wifi/hostapd_used.php
+/etc/templates/ppp/ppp_setup.php
+/usr/sbin/neaps
+/usr/sbin/pppd
+/usr/sbin/hostapd
+/www/wiz_wlan_2_wpa.php
+/www/locale/en/dsc/dsc_spt_bsc.php
+/www/locale/en/bsc_wlan.php
+/www/__wiz_wlan_action.php
+/www/wiz_wlan_2_wep.php
+/www/widgetV1.11/wlan_stats.xml
+/www/bsc_wlan.php
+
+-------------------- pgp --------------------
+
+-------------------- gpg --------------------
+
+-------------------- token --------------------
+/sbin/httpd
+/bin/busybox
+/usr/sbin/sendmail
+/usr/sbin/wps
+/usr/sbin/pppd
+/usr/sbin/hostapd
+/lib/iptables/libipt_PERS.so
+
+-------------------- api key --------------------
+
+-------------------- oauth --------------------
+
+
+***Search for web servers***
+##################################### search for web servers
+##################################### apache
+
+##################################### lighttpd
+
+##################################### alphapd
+
+##################################### httpd
+/etc/templates/httpd
+/sbin/httpd
+
+
+***Search for important binaries***
+##################################### important binaries
+##################################### ssh
+
+##################################### sshd
+
+##################################### scp
+
+##################################### sftp
+
+##################################### tftp
+
+##################################### dropbear
+
+##################################### busybox
+/bin/busybox
+
+##################################### telnet
+
+##################################### telnetd
+/usr/sbin/telnetd
+
+##################################### openssl
+
+
+***Search for ip addresses***
+##################################### ip addresses
+0.0.0.0
+10.0.0.138
+10.0.0.2
+10.0.0.212
+10.112.112.112
+10.112.112.113
+10.112.112.114
+1.112.112.133
+127.0.0.1
+192.167.0.1
+192.167.0.222
+192.168.0.1
+192.168.0.100
+192.168.0.199
+192.168.0.222
+192.168.0.50
+192.168.10.1
+192.168.10.222
+192.168.1.1
+192.168.1.5
+204.194.232.200
+204.194.234.200
+224.0.0.1
+239.0.0.0
+239.255.255.250
+255.0.0.0
+255.255.0.0
+255.255.255.0
+255.255.255.255
+5.0.2.46
+5.2.0.112
+5.3.1.45
+
+***Search for urls***
+##################################### urls
+http://<?=$ipaddr?>
+http://<?=$ipaddr?><
+http://<?=$ipaddr?>:<?=$port?><
+http://pajhome.org.uk
+http://purenetworks.com
+http://schemas.xmlsoap.org
+http://shopping.msn.com
+http://shopping.yahoo.com
+https://www.grc.com
+http://www.DLinkDDNS.com
+http://www.w3.org
+http://x.x.x.x:8080 whereas x.x.x.x is the
+
+***Search for emails***
+##################################### emails
+david_hsieh@alphanetworks.com

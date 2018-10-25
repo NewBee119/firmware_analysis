@@ -1,0 +1,106 @@
+Aladdin StuffIt(tm) for Linux and Solaris
+
+Welcome to StuffIt, the multi-platform archive compression/decompression and
+encoding/decoding tool from Aladdin Systems, Inc. These command line-based
+utilities will allow you to expand many compressed and encoded formats and
+create StuffIt (.sit) and Zip (.zip) archives and encode files into uuencode,
+BinHex, and MacBinary formats in Linux and Solaris. For a complete list of
+supported formats, execute each utility with a --formats option:
+    stuff --formats
+    unstuff --formats
+
+Aladdin StuffIt for Linux and Solaris is copyrighted software and is protected
+by the terms of our license agreement. If you find Aladdin StuffIt for Linux and
+Solaris to be useful, we ask that you let your friends, family, and co-workers
+know how much you like it and have them give it a try. Feel free to pass on the
+installer to them, or point them to our web site (http://www.aladdinsys.com) to
+get their own copy.
+
+
+
+How to use Aladdin StuffIt for Linux and Solaris
+
+There is full HTML documentation that is included in the files that have been
+installed with this application. This includes full descriptions of all the
+options that are available for file/folder compression and many sample commands.
+We suggest that you review the documentation before attempting to compress any
+files or folders into archives. Licensing Information
+
+StuffIt is copyrighted evaluation software. You should not run the software
+until you have read, and agreed to, the document called "LICENSE". By running
+the software you signify that you agree to the terms of the License Agreement.
+
+
+
+StuffIt Engine SDK(tm) and StuffIt(tm) registration
+
+StuffIt is evaluation software. You may use it and pay nothing for up to 15
+days. After 15 days you must register with Aladdin Systems.
+
+When you register you will be provided a registration number (single-user) or
+license (multiple-user, or server) StuffIt or the StuffIt Engine SDK. To
+register or license StuffIt or the StuffIt Engine SDK please contact Aladdin
+Systems.
+
+A single user license costs $29.95. For pricing on multiple user, server use, or
+commercial distribution of StuffIt archives, please contact our sales
+department.
+
+If you do not have a key file or wish to use your registration number to
+permanently patch the static library or the shared library or the stuff
+application, follow these instructions (we will assume that your registration
+number is ABCD-123-456789):
+
+In Windows, to register the static library (stuffit.engine.static.lib), the
+shared library (stuffit.engine.dll), or the stuff executable (stuff.exe),
+execute the following commands in their respective directories:
+    register stuffit.engine.static.lib ABCD-123-456789
+    register stuffit.engine.dll ABCD-123-456789
+    register stuff.exe ABCD-123-456789
+
+In Linux and Solaris, to register the static library (libstuffit.engine.a), the
+shared library (libstuffit.engine.so), or the stuff executable (stuff), execute
+the following commands in their respective directories:
+    register libstuffit.engine.a ABCD-123-456789
+    register libstuffit.engine.so ABCD-123-456789
+    register stuff ABCD-123-456789
+
+
+Additional Licenses:
+
+Server, multiple user and site licenses are available, please visit:
+    http://www.aladdinsys.com/store/licensing.html
+
+or contact: sdk.sales@aladdinsys.com
+
+
+
+Contacting Aladdin Systems
+
+If you would like more information about our other award-winning products, just
+ask us. We have products for Windows, Macintosh, Linux and Solaris. For the
+quickest way to learn more about Aladdin's products, visit our Internet Web site
+listed below.
+
+Aladdin Systems, Inc.
+245 Westridge Drive
+Watsonville, CA 95076, USA
+
+Telephone: 831-761-6200
+Fax: 831-761-6206
+Internet: http://www.aladdinsys.com
+
+Email:
+Licensing: sdk.sales@aladdinsys.com
+Customer Service: service@aladdinsys.com
+General Information: info@aladdinsys.com
+
+Copyright (c)1999-2001 Aladdin Systems, Inc. All Rights reserved.
+
+Aladdin Expander, DropStuff, Expander, StuffIt, StuffIt Deluxe, the Aladdin
+clamp, and the Aladdin logo are trademarks of Aladdin Systems, Inc. All other
+product names are trademarks or registered trademarks of their respective
+holders.
+
+$Id: README,v 1.7 2001/06/28 22:37:33 serge Exp $
+

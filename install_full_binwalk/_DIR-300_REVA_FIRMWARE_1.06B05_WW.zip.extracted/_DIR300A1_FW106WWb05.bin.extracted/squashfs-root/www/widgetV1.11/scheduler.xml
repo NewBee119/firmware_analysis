@@ -1,0 +1,71 @@
+<?
+	echo "<scheduler>";
+	echo	"<schedule_enable>".$sch_en."</schedule_enable>";
+	for("/sys/schedule/entry")
+	{
+		echo "<schedule_rule_".$InDeX.">";
+		echo	"<name>".get("x", "name")."</name>";
+		$weekdays = "";
+		if(get("x", "/sun") == 1)
+		{
+			$weekdays = $weekdays."1";
+		}
+		else
+		{
+			$weekdays = $weekdays."0";
+		}
+		if(get("x", "/mon") == 1)
+		{
+			$weekdays = $weekdays."1";
+		}
+		else
+		{
+			$weekdays = $weekdays."0";
+		}
+		if(get("x", "/tue") == 1)
+		{
+			$weekdays = $weekdays."1";
+		}
+		else
+		{
+			$weekdays = $weekdays."0";
+		}
+		if(get("x", "/wed") == 1)
+		{
+			$weekdays = $weekdays."1";
+		}
+		else
+		{
+			$weekdays = $weekdays."0";
+		}
+		if(get("x", "/thu") == 1)
+		{
+			$weekdays = $weekdays."1";
+		}
+		else
+		{
+			$weekdays = $weekdays."0";
+		}
+		if(get("x", "/fri") == 1)
+		{
+			$weekdays = $weekdays."1";
+		}
+		else
+		{
+			$weekdays = $weekdays."0";
+		}
+		if(get("x", "/sat") == 1)
+		{
+			$weekdays = $weekdays."1";
+		}
+		else
+		{
+			$weekdays = $weekdays."0";
+		}
+		echo	"<weekdays>".$weekdays."</weekdays>";
+		echo	"<start_time>".get("x", "begintime")."</start_time>";
+		echo	"<end_time>".get("x", "endtime")."/end_time";
+		echo "</schedule_rule_".$InDeX.">";
+	}
+	echo "</scheduler>";
+?>

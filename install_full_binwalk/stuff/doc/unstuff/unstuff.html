@@ -1,0 +1,243 @@
+<html>
+<head><title>unstuff</title></head>
+
+<body>
+<h2>unstuff - archive expander</h2>
+
+<p><b>unstuff</b> is an application that expands archives and decodes
+encoded files in multiple compressed and encoded formats. It is a
+command-line utility that uses the StuffIt Engine shared library.
+
+<h3>Command Line Syntax</h3>
+
+<p><b>unstuff</b> is invoked from the command line as follows:
+
+<p><pre>
+    unstuff [POSIX or GNU style options] (archives...)
+</pre>
+
+<p>where <code>(archives...)</code> is one or more archives to expand.
+
+<h4>Options</h4>
+
+<p>Command-line options are distinguished from arguments (archive names)
+by one or two dashes. <i>Short</i> (one-character) options are preceded
+by one dash, <i>long</i> (multi-character) options are preceded by two
+dashes. Some options have only a short or a long form; some have both.
+
+<p>Options are listed in two sections, one for common options and another
+for advanced options, in alphabetical order within each section.
+
+<h5>Common Options</h5>
+
+<p><table width=100% bgcolor=#ffffff cellpadding=2 cellspacing=1 border=0>
+<tr bgcolor=#b0b0b0>
+    <td valign=top><b>Long form</b>
+    <td valign=top><b>Short form</b>
+    <td valign=top><b>Default</b>
+    <td valign=top><b>Description</b>
+</tr>
+<tr bgcolor=#c0c0c0>
+    <td valign=top><code>--destination=[directory]
+    <td valign=top><code>-d=[directory]</code>
+    <td valign=top>[current directory]
+    <td valign=top>Sets the destination directory for expanded files.
+</tr>
+<tr bgcolor=#c0c0c0>
+    <td valign=top><code>--eol=[option]</code>
+    <td valign=top><code>-e=[option]</code>
+    <td valign=top><code>native</code>
+    <td valign=top>
+        Selects one of the following text type options, represented by
+        <code>[option]</code>: <code>native</code>, <code>win</code>,
+        <code>windows</code>, <code>crlf</code>, <code>unix</code>,
+        <code>lf</code>, <code>mac</code>, <code>macintosh</code>,
+        <code>cr</code>.
+</tr>
+<tr bgcolor=#c0c0c0>
+    <td valign=top><code>--formats</code>
+    <td valign=top>
+    <td valign=top>[no]
+    <td valign=top>
+        Shows archive formats supported by the StuffIt Engine. For each file format,
+        classifier and reader support is listed.
+</tr>
+<tr bgcolor=#c0c0c0>
+    <td valign=top><code>--macbinary=[option]<br>--mb=[option]</code>
+    <td valign=top><code>-m=[option]</code>
+    <td valign=top><code>off</code>
+    <td valign=top>
+        Selects one of the following MacBinary output options, represented by
+        <code>[option]</code>: <code>off</code>, <code>no</code>, <code>on</code>,
+        <code>yes</code>, or <code>auto</code>.
+</tr>
+<tr bgcolor=#c0c0c0>
+    <td valign=top><code>--password=[password]</code>
+    <td valign=top><code>-p=[password]</code>
+    <td valign=top>
+    <td valign=top>Sets the password to be used in the operation.
+</tr>
+<tr bgcolor=#c0c0c0>
+    <td valign=top><code>--quiet</code>
+    <td valign=top><code>-q</code>
+    <td valign=top>[no]
+    <td valign=top>Suppresses all messages normally printed during operation.
+</tr>
+<tr bgcolor=#c0c0c0>
+    <td valign=top><code>--text=[option]</code>
+    <td valign=top><code>-t=[option]</code>
+    <td valign=top><code>off</code>
+    <td valign=top>
+        Selects one of the following text conversion options, represented by
+        <code>[option]</code>: <code>off</code>, <code>no</code>,
+        <code>on</code>, <code>yes</code>, or <code>auto</code>. Applies to
+        <code>expand</code> and <code>create</code> operatons.
+</tr>
+<tr bgcolor=#c0c0c0>
+    <td valign=top><code>--version</code>
+    <td valign=top><code>-v</code>
+    <td valign=top>[no]
+    <td valign=top>Shows StuffIt Engine version information.
+</tr>
+</table>
+
+<h5>Advanced Options</h5>
+
+<p><table width=100% bgcolor=#ffffff cellpadding=2 cellspacing=1 border=0>
+<tr bgcolor=#b0b0b0>
+    <td valign=top><b>Long form</b>
+    <td valign=top><b>Short form</b>
+    <td valign=top><b>Default</b>
+    <td valign=top><b>Description</b>
+</tr>
+<tr bgcolor=#c0c0c0>
+    <td valign=top><code>--abort-on-error</code>
+    <td valign=top>
+    <td valign=top>[no]
+    <td valign=top>Aborts the operation when a recoverable error is encountered.
+</tr>
+<tr bgcolor=#c0c0c0>
+    <td valign=top><code>--classifier-position=[position]</code>
+    <td valign=top>
+    <td valign=top><code>0</code>
+    <td valign=top>Sets the initial classifier position to <code>position</code>.
+</tr>
+<tr bgcolor=#c0c0c0>
+    <td valign=top><code>--classifier-span=[size]</code>
+    <td valign=top>
+    <td valign=top><code>65536</code>
+    <td valign=top>Sets classifier span to <code>size</code>.
+</tr>
+<tr bgcolor=#c0c0c0>
+    <td valign=top><code>--classify</code>
+    <td valign=top><code>-c</code>
+    <td valign=top>[yes]
+    <td valign=top>Shows format information for the archive(s) listed on the command line.
+</tr>
+<tr bgcolor=#c0c0c0>
+    <td valign=top><code>--formats</code>
+    <td valign=top>
+    <td valign=top>[no]
+    <td valign=top>
+        Shows archive formats supported by StuffIt Engine. For each file format,
+        classifier and reader support is listed.
+</tr>
+<tr bgcolor=#c0c0c0>
+    <td valign=top><code>--pause</code>
+    <td valign=top>
+    <td valign=top>[no]
+    <td valign=top>Pauses and waits for a keystroke at the end.
+</tr>
+<tr bgcolor=#c0c0c0>
+    <td valign=top><code>--scan</code>
+    <td valign=top><code>-s</code>
+    <td valign=top>[yes]
+    <td valign=top>Lists archive contents for the archive(s) listed on the command line.
+</tr>
+<tr bgcolor=#c0c0c0>
+    <td valign=top><code>--threaded</code>
+    <td valign=top>
+    <td valign=top>[no]
+    <td valign=top>
+        Allows parallel (threaded) operation. A separate archive is
+        created for each input argument.
+</tr>
+<tr bgcolor=#c0c0c0>
+    <td valign=top><code>--trace</code>
+    <td valign=top>
+    <td valign=top>[no]
+    <td valign=top>
+        Prints trace information for use in debugging.
+</tr>
+</table>
+
+<h4>Examples</h4>
+
+<p><table width=100% bgcolor=#ffffff cellpadding=2 cellspacing=1 border=0>
+<tr bgcolor=#b0b0b0>
+    <td valign=top><b>Command line</b>
+    <td valign=top><b>Description</b>
+</tr>
+<tr bgcolor=#c0c0c0>
+    <td valign=top><code>unstuff archive.sit</code>
+    <td valign=top>Expands an archive named <code>archive.sit</code>.
+</tr>
+<tr bgcolor=#c0c0c0>
+    <td valign=top><code>unstuff --destination=C:\WINDOWS\TEMP archive.sit</code>
+    <td valign=top>
+        Expands an archive named <code>archive.sit</code> and places expanded
+        files into <code>C:\WINDOWS\TEMP</code>.
+</tr>
+<tr bgcolor=#c0c0c0>
+    <td valign=top><code>unstuff --destination=/var/tmp archive.sit</code>
+    <td valign=top>
+        Expands an archive named <code>archive.sit</code> and places expanded
+        files into <code>/var/tmp</code>.
+</tr>
+<tr bgcolor=#c0c0c0>
+    <td valign=top><code>unstuff --text=auto --eol=unix archive.sit</code>
+    <td valign=top>
+        Expands an archive named <code>archive.sit</code>, converting text files
+        to Unix format (LF end-of-lines).
+</tr>
+<tr bgcolor=#c0c0c0>
+    <td valign=top><code>unstuff --password=abcdef archive.sit</code>
+    <td valign=top>
+        Expands an archive named <code>archive.sit</code>, decrypting its contents
+        with the password <code>abcdef</code>.
+</tr>
+<tr bgcolor=#c0c0c0>
+    <td valign=top><code>sexpand --classify archive.sit</code>
+    <td valign=top>
+        Classifies an archive named <code>archive.sit</code>. Reports the archive
+        format and starting position.
+</tr>
+<tr bgcolor=#c0c0c0>
+    <td valign=top><code>sexpand --scan archive.sit</code>
+    <td valign=top>Lists the contents of an archive named <code>archive.sit</code>.
+</tr>
+<tr bgcolor=#c0c0c0>
+    <td valign=top><code>sexpand --classify --classifier-position=12345 --classifier-span=1000 archive.sit</code>
+    <td valign=top>
+        Classifies an archive named <code>archive.sit</code>, trying to find the beginning
+        of <i>any</i> archive or encoded format at positions 12345 through 13344.
+        Reports the archive format and starting position.
+</tr>
+<tr bgcolor=#c0c0c0>
+    <td valign=top><code>sexpand --classify --classify-formats=none,StuffIt archive.sit</code>
+    <td valign=top>
+        Classifies an archive named <code>archive.sit</code>, trying to find the beginning
+        of a StuffIt archive. No other archive or encoded formats are recognized.
+</tr>
+</table>
+
+<hr>
+
+<table><tr valign=top><td><img src="images/aladdin-logo.gif"></td>
+<td>Copyright &copy;1995-2001 <a href="http://www.aladdinsys.com/">Aladdin Systems, Inc.</a>
+<br>All Rights reserved.</font></td></tr></table>
+
+<p>$Id: unstuff.html,v 1.5 2001/03/16 01:13:14 serge Exp $
+
+</body></html>
+

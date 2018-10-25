@@ -1,0 +1,14 @@
+<?
+	echo "<routing_table>";
+	for("/runtime/routetable/entry")
+	{
+		echo "<routing_entry_".$InDeX.">";
+		echo	"<dest_addr>".get("x", "/destination")."</dest_addr>";
+		echo	"<dest_mask>".get("x", "/mask")."</dest_mask>";
+		echo	"<gateway>".get("x", "/gateway")."</gateway>";
+		echo	"<interface>".get("x", "/interface")."</interface>";
+		echo	"<metric>".get("x", "/metric")."</metric>";
+		echo "</routing_entry_".$InDeX.">";
+	}
+	echo "</routing_table>";
+?>

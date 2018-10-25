@@ -1,0 +1,115 @@
+#!/bin/sh
+usage="Usage wan [-g|-s] [xml node] {value}"
+echo "[$0] $1 $2 ..." > /dev/console
+case "$1" in
+"-g")
+	echo [$0] get from script is deprecated !!! > /dev/console
+	;;
+"-s")
+	case "$2" in
+	"inf:1/connect")
+#		TYPE=`rgdb -i -g /runtime/wan/inf:1/connecttype`
+		rgdb -i -s /runtime/wan/inf:1/connectstatus connecting
+		TYPE=`rgdb -g /wan/rg/inf:1/mode`
+		case "$TYPE" in
+		"2"|"7")
+			killall -SIGUSR1 udhcpc
+			sleep 2
+			;;
+		"3"|"4"|"5"|"6")
+			echo "Session 1 connecting ..." > /dev/console
+			if [ -f /var/run/ppp-session1.sh ]; then
+				case "$TYPE" in
+				"3")
+					DEMAND=`rgdb -g /wan/rg/inf:1/pppoe/onDemand`
+					;;
+				"4")
+					DEMAND=`rgdb -g /wan/rg/inf:1/pptp/onDemand`
+					;;
+				"5")
+					DEMAND=`rgdb -g /wan/rg/inf:1/l2tp/onDemand`
+					;;
+				"6")
+					DEMAND=`rgdb -g /wan/rg/inf:1/ppp3g/onDemand`
+					DEMAND=`rgdb -g /wan/rg/inf:1/ppp3g/reconnmode`
+					;;
+				esac
+				if [ "$DEMAND" = "1" ]; then
+					# OnDemand mode the peer is always 10.112.112.113,
+					# ping it to trigger connection						
+					ping 10.112.112.113 &			
+					ping 1.112.112.133 &		
+				else
+					sh /var/run/ppp-session1.sh stop
+					sleep 2
+					sh /var/run/ppp-session1.sh start
+				fi
+			fi
+			;;
+		esac
+		;;
+	"inf:1/disconnect")
+#		TYPE=`rgdb -i -g /runtime/wan/inf:1/connecttype`
+		rgdb -i -s /runtime/wan/inf:1/connectstatus disconnecting
+		TYPE=`rgdb -g /wan/rg/inf:1/mode`
+		case "$TYPE" in
+		"2"|"7")
+			killall -SIGUSR2 udhcpc
+			sleep 2
+			;;
+		"3"|"4"|"5"|"6")
+			echo "Session 1 disconnecting ..." > /dev/console
+			if [ -f /var/run/ppp-session1.sh ]; then
+				sh /var/run/ppp-session1.sh stop
+				case "$TYPE" in
+				"3")
+					DEMAND=`rgdb -g /wan/rg/inf:1/pppoe/onDemand`
+					AUTO=`rgdb -g /wan/rg/inf:1/pppoe/autoReconnect`
+					;;
+				"4")
+					DEMAND=`rgdb -g /wan/rg/inf:1/pptp/onDemand`
+					AUTO=`rgdb -g /wan/rg/inf:1/pptp/autoReconnect`
+					;;
+				"5")
+					DEMAND=`rgdb -g /wan/rg/inf:1/l2tp/onDemand`
+					AUTO=`rgdb -g /wan/rg/inf:1/l2tp/autoReconnect`
+					;;
+				"6")
+					DEMAND=`rgdb -g /wan/rg/inf:1/ppp3g/onDemand`
+					AUTO=`rgdb -g /wan/rg/inf:1/ppp3g/autoReconnect`
+					;;
+				esac
+				if [ "$DEMAND" = "1" -o  "$AUTO" = "1" ]; then
+					sleep 2
+					sh /var/run/ppp-session1.sh start
+				fi
+			fi
+			;;
+		esac
+		;;
+	"inf:1/discover")
+		RouterOn=`rgdb -i -g /runtime/router/enable`
+		if [ "$RouterOn" = "1" ]; then
+			if [ `rgdb -g /wan/rg/inf:1/mode` = 3 ]; then
+				if [ `rgdb -i -g /runtime/wan/inf:1/connectstatus` = connected ]; then
+					rgdb -i -s /runtime/wan/inf:1/discover 1
+					echo "PPPoE is connected !" > /dev/console
+					exit 0
+				fi
+			fi
+			IF=`rgdb -i -g /runtime/layout/wanif`
+			RES=`pppd pty_pppoe pppoe_discovery pppoe_device $IF`
+			[ "$RES" = "yes" ] && rgdb -i -s /runtime/wan/inf:1/discover 1 && echo "PPPoE server found!" > /dev/console && exit 0
+			RES=`udhcpc -i $IF -d`
+			[ "$RES" = "yes" ] && rgdb -i -s /runtime/wan/inf:1/discover 2 && echo "DHCP server found!" > /dev/console && exit 0
+			rgdb -i -s /runtime/wan/inf:1/discover 0
+		fi
+		echo "No server found !" > /dev/console
+		exit 0
+		;;
+	esac
+	;;
+*)
+	echo $usage
+	;;
+esac

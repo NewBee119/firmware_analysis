@@ -1,0 +1,3 @@
+<?
+require("/www/DevInfo.php");
+?>

@@ -1,0 +1,132 @@
+#!/bin/sh
+echo [$0] $1 ... > /dev/console
+TROOT="/etc/templates"
+SYNCWITH=`xmldbc -g /time/syncwith`
+case "$1" in
+COMMIT)
+	/etc/scripts/misc/profile.sh put >  /dev/console
+	;;
+WAN)
+	$TROOT/wan.sh restart > /dev/console &
+	;;
+LAN)
+	$TROOT/lan.sh delay_restart > /dev/console &
+	;;
+CLR_DEVSTATUS)
+	/etc/scripts/misc/nclr-devstatus.sh 20 &
+	;;
+LAN_CHANGE)
+	$TROOT/onlanchange.sh
+	$TROOT/upnpd.sh restart		> /dev/console &
+	;;
+HTTPD)
+	$TROOT/webs.sh restart > /dev/console
+	;;
+HTTPD_PASSWD)
+	$TROOT/webs.sh password > /dev/console
+	$TROOT/neaps.sh restart
+	logger -p 192.0 "Password changed"
+	;;
+REMOTE)
+	$TROOT/rg.sh misc		> /dev/console
+	xmldbc -A $TROOT/httpd/killallses.php
+	$TROOT/webs.sh reload	> /dev/console
+	;;
+DHCPD)
+	$TROOT/dhcpd.sh > /dev/console
+	;;
+DNSR)
+	$TROOT/dnrd.sh restart > /dev/console &
+	;;
+TIME)
+	if [ $SYNCWITH != "2" ]; then
+	xmldbc -i -s /runtime/timeset 1
+	fi
+	$TROOT/timezone.sh
+	$TROOT/ntp.sh start > /dev/console
+	;;
+WLAN)
+	$TROOT/wlan.sh restart > /dev/console
+	$TROOT/igmpproxy.sh restart > /dev/console
+	;;
+RESET_WLAN)
+	xmldbc -s /wireless/wps/configured	""
+	xmldbc -s /wireless/ssid			"dlink"
+	xmldbc -s /wireless/authtype		"0"
+	xmldbc -s /wireless/encrypttype		"0"
+	;;
+SYSLOG)
+	$TROOT/logs.sh > /dev/console &
+	;;
+FRESET)
+	/etc/scripts/misc/freset.sh > /dev/console &
+	;;
+REBOOT)
+	/etc/templates/wan.sh stop	> /dev/console
+	/etc/scripts/misc/nreboot.sh 3	> /dev/console &
+	;;
+RG)
+	$TROOT/rg.sh flushall	> /dev/console &
+	;;
+RG_FIREWALL)
+	$TROOT/rg.sh firewall	> /dev/console &
+	;;
+RG_IP_FILTER)
+	$TROOT/rg.sh ipfilter	> /dev/console &
+	;;
+RG_MAC_FILTER)
+	$TROOT/rg.sh macfilter	> /dev/console &
+	;;
+RG_BLOCKING)
+	$TROOT/rg.sh blocking	> /dev/console &
+	;;
+RG_VSVR)
+	$TROOT/rg.sh vrtsrv	> /dev/console &
+	;;
+RG_DMZ)
+	$TROOT/rg.sh dmz	> /dev/console &
+	;;
+RG_MISC)
+	/etc/scripts/misc/setwantype.sh	> /dev/console 
+	$TROOT/rg.sh misc			> /dev/console
+	$TROOT/rg.sh passthrough	> /dev/console
+	$TROOT/igmpproxy.sh restart	> /dev/console
+	$TROOT/upnpd.sh restart		> /dev/console &
+	;;
+RG_APP)
+	$TROOT/rg.sh portt	> /dev/console &
+	;;
+DDNS)
+	rm -rf /var/run/dyndns.html > /dev/console
+	$TROOT/dyndns.sh	> /dev/console &
+	;;
+DDNS_TEST)
+	$TROOT/dyndns_test.sh	> /dev/console &
+	;;
+SYSTEM)
+	/etc/scripts/system.sh restart &
+	;;
+DO_WPS)
+	$TROOT/wps.sh pin > /dev/console &
+	;;
+DO_WPS_PBC)
+	$TROOT/wps.sh pbc > /dev/console &
+	;;
+ROUTE)
+	$TROOT/route.sh restart > /dev/console &
+	;;
+CLEAR_LANG_PACK)
+	umount /www/locale/alt
+	echo "FFFFFFFFFFFFFFFF" > `cat /etc/config/langpack`
+	;;
+QOS)
+	$TROOT/qos.sh restart > /dev/console &
+	;;
+*)
+	echo "Usage: submit {COMMIT|WAN|LAN|WLAN|HTTPD|HTTPD_PASSWD|REMOTE|"
+	echo "               DHCPD|DNSR|TIME|SYSLOG|FRESET|DDNS|DDNS_TEST|SYSTEM|DO_WPS|"
+	echo "               RG|RG_FIREWALL|RG_IP_FILTER|RG_MAC_FILTER|RG_VSVR|RG_DMZ|RG_MISC|"
+	echo "               RG_URL_FILTER|RG_DOMAIN_FILTER|RG_APP|ROUTE|QOS}"
+	;;
+esac
+exit 0

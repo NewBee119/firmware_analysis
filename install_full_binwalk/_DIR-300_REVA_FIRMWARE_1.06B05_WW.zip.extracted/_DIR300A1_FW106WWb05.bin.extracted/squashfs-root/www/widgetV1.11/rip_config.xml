@@ -1,0 +1,15 @@
+<?
+
+//$rip_enable
+//$rip_rx_version
+//$rip_tx_version
+//$rip_v2_type
+
+	echo	"<rip_config>";
+		echo	"<rip_enable>".$rip_enable."</rip_enable>";
+		echo	"<rip_rx_version>".$rip_rx_version."</rip_rx_version>";
+		echo	"<rip_tx_version>".$rip_tx_version."</rip_tx_version>";
+		echo	"<rip_v2_type>".$rip_v2_type."</rip_v2_type>";
+	echo	"</rip_config>";
+
+?>

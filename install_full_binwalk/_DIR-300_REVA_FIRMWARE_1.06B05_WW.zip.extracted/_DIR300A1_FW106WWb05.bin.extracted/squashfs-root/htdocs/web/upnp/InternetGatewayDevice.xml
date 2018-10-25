@@ -1,0 +1,114 @@
+<? /* vi: set sw=4 ts=4: */
+$ipaddr	= query("/runtime/upnpdev/host");
+$port	= query("/runtime/upnpdev/port");
+$vendor	= query("/sys/vendor");
+$model	= query("/sys/modelname");
+$modeln	= query("/sys/upnpdev/modelnumber");
+if( $modeln == "" )	{ $modeln = "1"; }
+$url	= query("/sys/url");
+$sn		= query("/sys/serialnumber");
+if( $sn == "" )		{ $sn		= "000000001"; }
+$udn	= "uuid:".query("/runtime/upnpdev/root:1/uuid");
+
+$modeldesc = $vendor." ".$model;
+
+echo "\<\?xml version=\"1.0\"\?\>";
+?>
+<root xmlns="urn:schemas-upnp-org:device-1-0">
+	<specVersion>
+		<major>1</major>
+		<minor>0</minor>
+	</specVersion>
+	<URLBase>http://<?=$ipaddr?>:<?=$port?></URLBase>
+	<device>
+		<deviceType>urn:schemas-upnp-org:device:InternetGatewayDevice:1</deviceType>
+		<friendlyName><?=$model?></friendlyName>
+		<manufacturer><?=$vendor?></manufacturer>
+		<manufacturerURL><?=$url?></manufacturerURL>
+		<modelDescription><?=$modeldesc?></modelDescription>
+		<modelName><?=$model?></modelName>
+		<modelNumber><?=$modeln?></modelNumber>
+		<modelURL><?=$url?></modelURL>
+		<serialNumber><?=$sn?></serialNumber>
+		<UDN><?=$udn?></UDN>
+		<iconList>
+			<icon>
+				<mimetype>image/gif</mimetype>
+				<width>118</width>
+				<height>119</height>
+				<depth>8</depth>
+				<url>/ligd.gif</url>
+			</icon>
+		</iconList>
+		<serviceList>
+			<service>
+				<serviceType>urn:schemas-microsoft-com:service:OSInfo:1</serviceType>
+				<serviceId>urn:microsoft-com:serviceId:OSInfo1</serviceId>
+				<controlURL>/upnpdev.cgi?service=OSInfo1</controlURL>
+				<eventSubURL>/OSInfo1.upnp</eventSubURL>
+				<SCPDURL>/xmldoc/OSInfo.xml</SCPDURL>
+			</service>
+			<service>
+				<serviceType>urn:schemas-upnp-org:service:Layer3Forwarding:1</serviceType>
+				<serviceId>urn:upnp-org:serviceId:L3Forwarding1</serviceId>
+				<controlURL>/upnpdev.cgi?service=L3Forwarding1</controlURL>
+				<eventSubURL>/L3Forwarding1.upnp</eventSubURL>
+				<SCPDURL>/xmldoc/Layer3Forwarding.xml</SCPDURL>
+			</service>
+		</serviceList>
+		<deviceList>
+			<device>
+				<deviceType>urn:schemas-upnp-org:device:WANDevice:1</deviceType>
+				<friendlyName>WANDevice</friendlyName>
+				<manufacturer><?=$vendor?></manufacturer>
+				<manufacturerURL><?=$url?></manufacturerURL>
+				<modelDescription>WANDevice</modelDescription>
+				<modelName><?=$model?></modelName>
+				<modelNumber>1</modelNumber>
+				<modelURL><?=$url?></modelURL>
+				<serialNumber><?=$sn?></serialNumber>
+				<UDN><?=$udn?></UDN>
+				<serviceList>
+					<service>
+						<serviceType>urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1</serviceType>
+						<serviceId>urn:upnp-org:serviceId:WANCommonIFC1</serviceId>
+						<controlURL>/upnpdev.cgi?service=WANCommonIFC1</controlURL>
+						<eventSubURL>/WANCommonIFC1.upnp</eventSubURL>
+						<SCPDURL>/xmldoc/WANCommonInterfaceConfig.xml</SCPDURL>
+					</service>
+				</serviceList>
+				<deviceList>
+					<device>
+						<deviceType>urn:schemas-upnp-org:device:WANConnectionDevice:1</deviceType>
+						<friendlyName>WANConnectionDevice</friendlyName>
+						<manufacturer><?=$vendor?></manufacturer>
+						<manufacturerURL><?=$url?></manufacturerURL>
+						<modelDescription>WanConnectionDevice</modelDescription>
+						<modelName><?=$model?></modelName>
+						<modelNumber>1</modelNumber>
+						<modelURL><?=$url?></modelURL>
+						<serialNumber><?=$sn?></serialNumber>
+						<UDN><?=$udn?></UDN>
+						<serviceList>
+							<service>
+								<serviceType>urn:schemas-upnp-org:service:WANEthernetLinkConfig:1</serviceType>
+								<serviceId>urn:upnp-org:serviceId:WANEthLinkC1</serviceId>
+								<controlURL>/upnpdev.cgi?service=WANEthLinkC1</controlURL>
+								<eventSubURL>/WANEthLinkC1.upnp</eventSubURL>
+								<SCPDURL>/xmldoc/WANEthernetLinkConfig.xml</SCPDURL>
+							</service>
+							<service>
+								<serviceType>urn:schemas-upnp-org:service:WANIPConnection:1</serviceType>
+								<serviceId>urn:upnp-org:serviceId:WANIPConn1</serviceId>
+								<controlURL>/upnpdev.cgi?service=WANIPConn1</controlURL>
+								<eventSubURL>/WANIPConn1.upnp</eventSubURL>
+								<SCPDURL>/xmldoc/WANIPConnection.xml</SCPDURL>
+							</service>
+						</serviceList>
+					</device>
+				</deviceList>
+			</device>
+		</deviceList>
+		<presentationURL>http://<?=$ipaddr?>/</presentationURL>
+	</device>
+</root>

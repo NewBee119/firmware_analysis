@@ -1,0 +1,161 @@
+<?
+	$wan_status = get("x","/runtime/wan/inf:1/connectstatus");
+	$wan_ip = get("x","/runtime/wan/inf:1/ip");
+	$wan_netmask = get("x","/runtime/wan/inf:1/netmask");
+	$wan_gateway = get("x","/runtime/wan/inf:1/gateway");
+	$wan_pridns = get("x","/runtime/wan/inf:1/primarydns");
+	$wan_secdns = get("x","/runtime/wan/inf:1/secondarydns");
+	if($wan_status == "")	{$wan_status="Disconnected";}
+	if($wan_status != "connected")
+	{
+		$null_val       = "0.0.0.0";
+		$wan_ip         = $null_val;
+		$wan_gateway    = $null_val;
+		$wan_netmask    = $null_val;
+		$wan_pridns     = $null_val;
+		$wan_secdns     = $null_val;
+	}
+	else
+	{
+		$m_na = "N/A";
+		if($wan_ip=="")         {$wan_ip        = $m_na;}
+		if($wan_gateway=="")    {$wan_gateway   = $m_na;}
+		if($wan_netmask=="")    {$wan_netmask   = $m_na;}
+		if($wan_pridns=="")     {$wan_pridns    = $m_na;}
+		if($wan_secdns=="")     {$wan_secdns    = $m_na;}
+	}
+	$wan_stime = get("x","/runtime/wan/inf:1/uptime");
+	$wan_ctime = get("x","/runtime/sys/uptime");
+	if($wan_stime == "")
+	{
+		$wan_uptime = "0";
+	}
+	else
+	{
+		$wan_uptime = $wan_ctime - $wan_stime;
+	}
+	$wan_mtu = get("x","/runtime/wan/inf:1/mtu");
+	$wan_tx_packets = get("x","/runtime/stats/wan/inf:1/tx/packets");
+	$wan_rx_packets = get("x","/runtime/stats/wan/inf:1/rx/packets");
+	$wan_collision_packets = get("x","/runtime/stats/wan/inf:1/tx/collisions");
+	$wan_tx_bytes = get("x","/runtime/stats/wan/inf:1/tx/bytes");
+	$wan_rx_bytes = get("x","/runtime/stats/wan/inf:1/rx/bytes");
+	$wan_type = get("x", "/wan/rg/inf:1/mode");
+
+	echo "<wan_stats>";
+	echo	"<wan_mtu>".$wan_mtu."</wan_mtu>";
+	echo	"<wan_specify_dns>".$wan_specify_dns."</wan_specify_dns>";
+	echo	"<dlink_dns_en>".$dlink_dns_en."</dlink_dns_en>";
+	echo	"<wan_primary_dns>".$wan_pridns."</wan_primary_dns>";
+	echo	"<wan_secondary_dns>".$wan_secdns."</wan_secondary_dns>";
+	echo	"<wan_protocol>";
+	map("/wan/rg/inf:1/mode",
+		"1","static",
+		"2","dhcpc",
+		"3","pppoe",
+		"4","pptp",
+		"5","l2tp",
+		"6","mpppoe",
+		"7","wwan"
+		);
+	echo 	"</wan_protocol>";
+	echo 	"<wan_ip>".$wan_ip."</wan_ip>";
+	echo	"<wan_netmask>".$wan_netmask."</wan_netmask>";
+	echo	"<wan_default_gateway>".$wan_gateway."</wan_default_gateway>";
+	echo	"<wan_dhcp_server_ip>".$wan_dhcp_server_ip."</wan_dhcp_server_ip>";
+	echo	"<wan_dhcpc_expired_time>".$wan_dhcpc_expired_time."</wan_dhcpc_expired_time>";
+	if($wan_type == 3 || $wan_type == 6) //PPPoE or Multi-PPPoE
+	{
+		echo	"<wan_pppoe_session_0>";
+		echo		"<enable>".$wan_pppoe_en."</enable>";
+		echo		"<dynamic>".$wan_pppoe_dynamic."</dynamic>";
+		echo		"<username>".$wan_pppoe_name."</username>";
+		echo		"<password>".$wan_pppoe_pass."</password>";
+		echo		"<max_idle_time>".$wan_pppoe_idle."</max_idle_time>";
+		echo		"<connect_mode>".$wan_pppoe_conn_mode."</connect_mode>";
+		echo		"<ppp_auth_type>".$wan_ppp_auth_type."</ppp_auth_type>";
+		echo		"<ip>".$wan_pppoe_ip."</ip>";
+		echo		"<netmask>".$wan_pppoe_mask."</netmask>";
+		echo		"<gateway>".$wan_pppoe_gw."</gateway>";
+		echo		"<mtu>".$wan_pppoe_mtu."</mtu>";
+		echo		"<connection_status>".$wan_pppoe_conn_status."</connection_status>";
+		echo	"</wan_pppoe_session_0>";
+		if($wan_type == 6) //Multi-PPPoE
+		{
+			echo	"<wan_pppoe_session_1>";
+			echo		"<enable>".$wan_pppoe1_en."</enable>";
+			echo		"<dynamic>".$wan_pppoe1_dynamic."</dynamic>";
+			echo		"<username>".$wan_pppoe1_name."</username>";
+			echo		"<password>".$wan_pppoe1_pass."</password>";
+			echo		"<max_idle_time>".$wan_pppoe1_idle."</max_idle_time>";
+			echo		"<connect_mode>".$wan_pppoe1_conn_mode."</connect_mode>";
+			echo		"<ppp_auth_type>".$wan_ppp1_auth_type."</ppp_auth_type>";
+			echo		"<ip>".$wan_pppoe1_ip."</ip>";
+			echo		"<netmask>".$wan_pppoe1_mask."</netmask>";
+			echo		"<gateway>".$wan_pppoe1_gw."</gateway>";
+			echo		"<mtu>".$wan_pppoe1_mtu."</mtu>";
+			echo		"<connection_status>".$wan_pppoei1_conn_status."</connection_status>";
+			echo	"</wan_pppoe_session_1>";
+		}
+	}
+	if($wan_type == 4) //PPtP
+	{
+		echo	"<wan_pptp_session>";
+		echo		"<dynamic>".$wan_pptp_dynamic."</dynamic>";
+		echo		"<username>".$wan_pptp_name."</username>";
+		echo		"<password>".$wan_pptp_pass."</password>";
+		echo		"<max_idle_time>".$wan_pptp_idle."</max_idle_time>";
+		echo		"<connect_mode>".$wan_pptp_conn_mode."</connect_mode>";
+		echo		"<ppp_auth_type>".$wan_ppp_auth_type."</ppp_auth_type>";
+		echo		"<ip>".$wan_pptp_ip."</ip>";
+		echo		"<netmask>".$wan_pptp_mask."</netmask>";
+		echo		"<gateway>".$wan_pptp_gw."</gateway>";
+		echo		"<mtu>".$wan_pptp_mtu."</mtu>";
+		echo		"<connection_status>".$wan_pptp_conn_status."</connection_status>";
+		echo	"</wan_pptp_session>";
+	}
+	if($wan_type == 5) //L2tP
+	{
+		echo	"<wan_l2tp_session>";
+		echo		"<dynamic>".$wan_l2tp_dynamic."</dynamic>";
+		echo		"<username>".$wan_l2tp_name."</username>";
+		echo		"<password>".$wan_l2tp_pass."</password>";
+		echo		"<max_idle_time>".$wan_l2tp_idle."</max_idle_time>";
+		echo		"<connect_mode>".$wan_l2tp_conn_mode."</connect_mode>";
+		echo		"<ppp_auth_type>".$wan_ppp_auth_type."</ppp_auth_type>";
+		echo		"<ip>".$wan_l2tp_ip."</ip>";
+		echo		"<netmask>".$wan_l2tp_mask."</netmask>";
+		echo		"<gateway>".$wan_l2tp_gw."</gateway>";
+		echo		"<server_ip>".$wan_l2tp_gw."</server_ip>";
+		echo		"<mtu>".$wan_l2tp_mtu."</mtu>";
+		echo		"<connection_status>".$wan_l2tp_conn_status."</connection_status>";
+		echo	"</wan_l2tp_session>";
+	}
+	if($wan_type == 7) //wwan
+	{
+		echo	"<wan_wwan>";
+		echo		"<country>".$wwan_country."</country>";
+		echo		"<isp>".$wwan_isp."</isp>";
+		echo		"<username>".$wwan_name."</username>";
+		echo		"<password>".$wwan_pass."</password>";
+		echo		"<dial_number>".$wwan_dial."</dial_number>";
+		echo		"<connect_mode>".$wwan_conn_mode."</connect_mode>";
+		echo		"<wwan_auth_type>".$wwan_auth_type."</wwan_auth_type>";
+		echo		"<apn>".$wwan_apn."</apn>";
+		echo		"<max_idle_time>".$wwan_idle."</max_idle_time>";
+		echo		"<mtu>".$wwan_mtu."</mtu>";
+		echo		"<connection_status>".$wwan_conn_status."</connection_status>";
+		echo	"</wan_wwan>";
+	}
+	echo	"<wan_tx_packets>".$wan_tx_packets."</wan_tx_packets>";
+	echo	"<wan_rx_packets>".$wan_rx_packets."</wan_rx_packets>";
+	echo	"<wan_lost_packets>".$wan_lost_packets."</wan_lost_packets>";
+	echo	"<wan_collision_packets>".$wan_collision_packets."</wan_collision_packets>";
+	echo	"<wan_tx_bytes>".$wan_tx_bytes."</wan_tx_bytes>";
+	echo	"<wan_rx_bytes>".$wan_rx_bytes."</wan_rx_bytes>";
+	echo	"<timestamp>".$timestamp."</timestamp>";
+	echo	"<wan_uptime>".$wan_uptime."</wan_uptime>";
+	echo	"<wan_total_uptime>".$wan_total_uptime."</wan_total_uptime>";
+	echo	"<current_internet_sessions>".$wan_sessions."</current_internet_sessions>";
+	echo "</wan_stats>";
+?>

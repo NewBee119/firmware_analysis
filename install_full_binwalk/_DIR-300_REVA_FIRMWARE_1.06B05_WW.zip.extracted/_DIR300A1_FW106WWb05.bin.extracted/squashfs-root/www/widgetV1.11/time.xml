@@ -1,0 +1,28 @@
+<?
+	echo "<time>";
+	echo	"<time_zone_index>".get("x", "/time/timezone")."</time_zone_index>";
+	echo	"<time_daylight_saving>".get("x", "/time/daylightsaving")."</time_daylight_saving>";
+	echo	"<time_daylight_saving>";
+	echo		"<enable>".get("x", "/time/daylightsaving/enable")."</enable>";
+	echo		"<start_month>".get("x", "/time/daylightsaving/start_month")."</start_month>";
+	echo		"<start_week>".get("x", "/time/daylightsaving/start_week")."</start_week>";
+	echo		"<start_day_of_week>".get("x", "/time/daylightsaving/start_day_of_week")."</start_day_of_week>";
+	echo		"<start_time>".get("x", "/time/daylightsaving/start_time")."</start_time>";
+	echo		"<end_month>".get("x", "/time/daylightsaving/end_month")."</end_month>";
+	echo		"<end_week>".get("x", "/time/daylightsaving/end_week")."</end_week>";
+	echo		"<end_day_of_week>".get("x", "/time/daylightsaving/end_day_of_week")."</end_day_of_week>";
+	echo		"<end_time>".get("x", "/time/daylightsaving/end_time")."</end_time>";
+	echo	"</time_daylight_saving>";
+	echo	"<ntp>";
+	$sync = get("x", "/time/sync");
+	$ntp_en = 0;
+	if($sync == 2)
+	{
+		$ntp_en = 1;
+	}
+	echo		"<enable>".$ntp_en."</enable>";
+	echo		"<sync_interval>".get("x", "/time/ntpserver/interval")."</sync_interval>";
+	echo		"<server>".get("x", "/time/ntpserver/ip")."</server>";
+	echo	"</ntp>";
+	echo "</time>";
+?>

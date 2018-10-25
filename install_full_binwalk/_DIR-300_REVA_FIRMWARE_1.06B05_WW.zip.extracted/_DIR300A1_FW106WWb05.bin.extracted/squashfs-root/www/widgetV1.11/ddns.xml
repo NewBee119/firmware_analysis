@@ -1,0 +1,15 @@
+<?
+	echo "<ddns>";
+	echo	"<enable>".get("x", "/ddns/enable")."</enable>";
+	echo	"<hostname>".get("x", "/ddns/hostname")."</hostname>";
+	echo	"<server>".get("x", "/ddns/provider")."</server>";
+	echo	"<username>".get("x", "/ddns/user")."</username>";
+	echo	"<password>".get("x", "/ddns/password")."</password>";
+	echo	"<kinds>".get("x", "/ddns/kinds")."</kinds>";
+	echo	"<last_host_registered>".get("x", "/runtime/ddns/last_host_registered")."</last_host_registered>";
+	echo	"<last_ip_registered>".get("x", "/runtime/ddns/ipaddr")."</last_ip_registered>";
+	echo	"<last_server_registered>".get("x", "/ddns/provider")."</last_server_registered>";
+	echo	"<timeout>".get("x", "/runtime/ddns/uptime")."</timeout>";
+	echo	"<status>".get("x", "/runtime/ddns/status")."</status>";
+	echo "</ddns>";
+?>

@@ -1,0 +1,56 @@
+<?
+	echo "<virtual_server>";
+	for("/nat/vrtsrv/entry")
+	{
+		echo "<port_forward_".$InDeX.">";
+		echo	"<enable>".get("x", "/enable")."</enable>";
+		echo	"<name>".get("x", "/description")."</name>";
+		//Get Internal Ports
+		$priv_start_port = get("x", "/internal/startport");
+		$priv_end_port = get("x", "/internal/endport");
+		if($priv_start_port != $priv_end_port)
+		{
+			$priv_port = $priv_start_port."-".$priv_end_port;
+		}
+		else
+		{
+			$priv_port = $priv_start_port;
+		}
+		//Get External Ports
+		$pub_start_port = get("x", "/external/startport");
+		$pub_end_port = get("x", "/external/endport");
+		if($pub_start_port != $pub_end_port)
+		{
+			$pub_port = $pub_start_port."-".$pub_end_port;
+		}
+		else
+		{
+			$pub_port = $pub_start_port;
+		}
+		//Get Protocol
+		$proto = get("x", "/protocol");
+		if($proto == 0)
+		{
+			$proto_str = "BOTH";
+		}
+		else if($proto == 1)
+		{
+			$proto_str = "TCP";
+		}
+		else if($proto == 2)
+		{
+			$proto_str = "UDP";
+		}
+		else
+		{
+			$proto_str = $proto;
+		}
+		echo	"<protocol_type>".$tcp_port."</protocol_type>";
+		echo	"<public_port>".$tcp_port."</public_port>";
+		echo	"<private_port>".$udp_port."</private_port>";
+		echo	"<ip>".get("x", "/internal/ip")."</ip>";
+		echo	"<schedule_name>".get("x", "/schedule/id")."</schedule_name>";
+		echo "</port_forward_".$InDeX.">";
+	}
+	echo "</virtual_server>";
+?>

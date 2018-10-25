@@ -1,0 +1,29 @@
+<?
+	$log_type_path = "/security/log/";
+	$log_mail_path = "/sys/log/";
+	echo "<system_log>";
+	echo	"<log_critical>".get("x", $log_type_path."droppacketinfo")."</log_critical>"
+	echo	"<log_system>".get("x", $log_type_path."systeminfo")."</log_system>"
+	echo	"<log_debug>".get("x", $log_type_path."debuginfo")."</log_debug>"
+	echo	"<log_firewall>".get("x", $log_type_path."attackinfo")."</log_firewall>"
+	echo	"<log_warning>".get("x", $log_type_path."noticeinfo")."</log_warning>"
+	echo	"<log_status>"."1"."</log_status>"
+	echo	"<log_syslog_enable>".get("x", $log_mail_path."logserverenable")."</log_syslog_enable>"
+	$log_mail = get("x", $log_mail_path."email");
+	if($log_mail == "")
+	{
+		$log_mail_en = 0;
+	}
+	else
+	{
+		$log_mail_en = 1;
+	}
+	echo	"<log_syslog_server>".get("x", $log_mail_path."logserver")."</log_syslog_server>"
+	echo	"<log_email_enable>".$log_mail_en."</log_email_enable>"
+	echo	"<log_email_sender>".get("x", $log_mail_path."sender")."</log_email_sender>"
+	echo	"<log_email_recipient>".$log_mail."</log_email_recipient>"
+	echo	"<log_email_server>".get("x", $log_mail_path."mailserver")."</log_email_server>"
+	echo	"<log_email_username>".get("x", $log_mail_path."username")."</log_email_username>"
+	echo	"<log_email_password>".get("x", $log_mail_path."password")."</log_email_password>"
+	echo "</system_log>";
+?>

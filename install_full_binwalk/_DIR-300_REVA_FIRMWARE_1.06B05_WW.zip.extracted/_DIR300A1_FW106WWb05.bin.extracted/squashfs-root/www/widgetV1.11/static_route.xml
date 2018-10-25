@@ -1,0 +1,16 @@
+<?
+	echo "<static_route>";
+	for("/routing/route/entry")
+	{
+		echo "<static_routing_".$InDeX.">";
+		echo	"<enable>".get("x", "/enable")."</enable>";
+		echo	"<name>".get("x", "/name")."</name>";
+		echo	"<dest_addr>".get("x", "/destination")."</dest_addr>";
+		echo	"<dest_mask>".get("x", "/mask")."</dest_mask>";
+		echo	"<gateway>".get("x", "/gateway")."</gateway>";
+		echo	"<interface>".get("x", "/interface")."</interface>";
+		echo	"<metric>".get("x", "/metric")."</metric>";
+		echo "</static_routing_".$InDeX.">";
+	}
+	echo "</static_route>";
+?>

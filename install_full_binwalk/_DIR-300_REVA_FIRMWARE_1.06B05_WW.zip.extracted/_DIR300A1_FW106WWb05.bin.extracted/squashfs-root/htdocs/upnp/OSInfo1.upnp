@@ -1,0 +1,30 @@
+<? /* vi: set sw=4 ts=4: */
+require("/etc/templates/troot.php");
+require("/etc/templates/upnpmsg.php");
+$MMM="GOT ".$METHOD.": sid=".$SID.",host=".$HOST.",uri=".$URI.",timeout=".$TIMEOUT."\n";
+fwrite($UPNPMSG, $MMM);
+
+anchor("/runtime/upnpdev/root:1/service:1");
+require("/etc/templates/upnpd/__SUBSCRIBE.cleanup.php");
+
+if ($METHOD=="SUBSCRIBE")
+{
+	if ($SID=="")
+	{
+		require($template_root."/upnpd/run.SUBSCRIBE.new.php");
+
+		$SID=$new_uuid;
+		$TARGET_PHP="/etc/templates/upnpd/NOTIFY.OSInfo.1.php";
+		require("/etc/templates/upnpd/run.NOTIFY.init.php");
+		set("subscription:".$index."/seq", "1");
+	}
+	else
+	{
+		require($template_root."/upnpd/run.SUBSCRIBE.sid.php");
+	}
+}
+else if ($METHOD=="UNSUBSCRIBE")
+{
+	require($template_root."/upnpd/run.UNSUBSCRIBE.php");
+}
+?>

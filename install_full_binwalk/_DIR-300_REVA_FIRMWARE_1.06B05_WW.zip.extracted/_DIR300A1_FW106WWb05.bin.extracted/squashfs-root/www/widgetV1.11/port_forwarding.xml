@@ -1,0 +1,53 @@
+<?
+	echo "<port_forwarding>";
+	for("/nat/vrtsrv/entry")
+	{
+		echo "<port_forward_".$InDeX.">";
+		echo	"<enable>".get("x", "/enable")."</enable>";
+		echo	"<name>".get("x", "/description")."</name>";
+		$proto = get("x", "/protocol");
+		$start_port = get("x", "/external/startport");
+		$end_port = get("x", "/external/endport");
+		if($proto == 0)
+		{
+			if($start_port != $end_port)
+			{
+				$udp_port = $start_port."-".$end_port;
+				$tcp_prot = $start_port."-".$end_port;
+			}
+			else
+			{
+				$udp_port = $start_port;
+				$tcp_port = $start_port;
+			}
+		}
+		else if($proto == 1)
+		{
+			if($start_port != $end_port)
+			{
+				$tcp_prot = $start_port."-".$end_port;
+			}
+			else
+			{
+				$tcp_port = $start_port;
+			}
+		}
+		else
+		{
+			if($start_port != $end_port)
+			{
+				$udp_port = $start_port."-".$end_port;
+			}
+			else
+			{
+				$udp_port = $start_port;
+			}
+		}
+		echo	"<tcp_port>".$tcp_port."</tcp_port>";
+		echo	"<udp_port>".$udp_port."</udp_port>";
+		echo	"<ip>".get("x", "/internal/ip")."</ip>";
+		echo	"<schedule_name>".get("x", "/schedule/id")."</schedule_name>";
+		echo "</port_forward_".$InDeX.">";
+	}
+	echo "</port_forwarding>";
+?>

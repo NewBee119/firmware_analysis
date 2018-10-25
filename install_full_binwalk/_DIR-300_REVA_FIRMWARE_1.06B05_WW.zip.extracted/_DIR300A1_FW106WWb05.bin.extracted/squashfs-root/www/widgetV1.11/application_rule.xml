@@ -1,0 +1,44 @@
+<?
+	echo "<application_rule>";
+	for("/nat/porttrigger/entry")
+	{
+		echo "<application_entry_".$InDeX.">";
+		echo	"<enable>".get("x", "/enable")."</enable>";
+		echo	"<name>".get("x", "/description")."</name>";
+		$proto = get("x", "/trigger/protocol");
+		if($proto == 0)
+		{
+			$proto_str = "ANY";
+		}
+		else if($proto == 1)
+		{
+			$proto_str = "TCP";
+		}
+		else
+		{
+			$proto_str = "UDP";
+		}
+		echo	"<tirgger_protocol>".$proto_str."</trigger_protocol>";
+		$inner_port_start = get("x", "/trigger/startport");
+		$inner_port_end = get("x", "/trigger/endport");
+		echo	"<trigger_ports>".$inner_port_start."-".$inner_port_end."</trigger_ports>";
+		$proto_ext = get("x", "/external/protocol");
+		if($proto_ext == 0)
+		{
+			$proto_str_ext = "ANY";
+		}
+		else if($proto_ext == 1)
+		{
+			$proto_str_ext = "TCP";
+		}
+		else
+		{
+			$proto_str_ext = "UDP";
+		}
+		echo	"<public_protocol>".$proto_str_ext."</public_protocol>";
+		echo	"<public_prots>".get("x", "/external/portlist")."</public_ports>";
+		echo	"<schedule_name>".get("x", "/schedule/id")."</schedule_name>";
+		echo "</application_entry_".$InDeX.">";
+	}
+	echo "</application_rule>";
+?>

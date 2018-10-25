@@ -1,0 +1,45 @@
+NTC:001>PPP: Connection terminated.
+NTC:002>PPP: Traffice limit reached. Limit: $0 Used: $1, maxoctets, used.
+NTC:003>PPP: Terminating connection due to lack of activity.
+NTC:004>PPP: Connect time expired.
+NTC:005>IPCP: local IP address $0.
+NTC:006>IPCP: remote IP address $0.
+NTC:007>IPCP: primary DNS address $0.
+NTC:008>IPCP: secondary DNS address $0.
+NTC:009>PPP: No response to $0 LCP echo requests.
+NTC:010>DHCP: Client send DISCOVER.
+NTC:011>DHCP: Client receive OFFER from $0.
+NTC:012>DHCP: Client send REQUEST to server $1, request IP=$0.
+NTC:013>DHCP: Client receive ACK from $0, IP=$1, Lease time=$2.
+NTC:014>DHCP: Client receive ACK, but the address ($0) is used by another host.
+NTC:015>DHCP: Client receive NAK.
+NTC:016>DHCP: Client performing a DHCP renew.
+NTC:017>DHCP: Client release IP $0 to server $1.
+NTC:018>DHCP: Server receive DISCOVER from $0.
+NTC:019>DHCP: Server sending OFFER of $0.
+NTC:020>DHCP: Server sending OFFER of $0 for static DHCP client.
+NTC:021>DHCP: Server lease pool is full, OFFER abandoned.
+NTC:022>DHCP: Server receive REQUEST from $0.
+NTC:023>DHCP: Server sending NAK to $0.
+NTC:024>DHCP: Server sending ACK to $0. (Lease time = $1)
+NTC:025>PPPoE: Sending PADI for $0.
+NTC:026>PPPoE: Received PADO for $0, from $1.
+NTC:027>PPPoE: Sending PADR for $0.
+NTC:028>PPPoE: Received PADS for $0. (Session ID: $1)
+NTC:029>PPPoE: Ignore PADO packet from non-unicast MAC address ($0).
+NTC:030>PPPoE: Ignore PADO packet with no AC-Name tag ($0).
+NTC:031>PPPoE: Ignore PADO packet with no Service-Name tag ($0).
+NTC:032>PPPoE: Sending PADT for $0. (Session ID: $1)
+NTC:033>DDNS: Successfully updated.
+NTC:034>DDNS: Update failed, server response:[$0].
+NTC:035>DHCP: Server receive RELEASE from $0.
+NTC:036>WLAN: Received ASSOC from $1, Mac:$0.
+NTC:037>WLAN: Received DISASSOC from $1, Mac:$0.
+NTC:038>WLAN: Received AUTH from $1, Mac:$0.
+NTC:039>WLAN: Received DEAUTH from $1, Mac:$0.
+NTC:040>WLAN: Sending ASSOC to Mac:$0.
+NTC:041>WLAN: Sending DISASSOC to Mac:$0.
+NTC:042>WLAN: Sending AUTH to Mac:$0.
+NTC:043>WLAN: Sending DEAUTH to Mac:$0.
+NTC:044>WLAN: Sending AUTH Fail to Mac:$0.
+NTC:045>Web site $0 accessed from $1.

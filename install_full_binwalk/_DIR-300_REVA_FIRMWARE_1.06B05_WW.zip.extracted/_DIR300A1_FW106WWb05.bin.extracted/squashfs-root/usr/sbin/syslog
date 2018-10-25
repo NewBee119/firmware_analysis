@@ -1,0 +1,108 @@
+#!/bin/sh
+usage="Usage: syslog [-g|-s] [xml node] {value}"
+case "$1" in
+-g)
+	echo [$0] get from script is deprecated !! > /dev/console
+	;;
+-s)
+	log_path="/var/log/messages"
+	tlog_path="/var/log/tlogsmsg"
+	smtp_msg_path="/var/log/smtp_message.txt"
+	if [ "$2" = "sendmail" -o "$2" = "auth_sendmail" ]; then
+		smtp="/usr/sbin/smtpclient"
+		sendmail="/usr/sbin/sendmail"
+		if [ -f "$sendmail" ]; then
+			argv="auth_sendmail"
+		elif [ -f "$smtp" ]; then
+			argv="sendmail"
+		fi
+	else
+		argv=$2	
+	fi
+	echo syslog: execute -s [$argv]... > /dev/console	
+	case "$argv" in
+	tlogs)
+		tlogs -l $log_path > $tlog_path
+		;;
+	clear)
+		date_time=`date | scut -f2 -n3`
+		echo "$date_time  |  SYS:038" > $log_path
+		tlogs -l $log_path > $tlog_path
+		;;
+	sendmail)
+		mail_server=`rgdb -g /sys/log/mailserver`
+		email_addr=`rgdb -g /sys/log/email`
+		mail_subject="Log Message."
+		mail_port=`rgdb -g /sys/log/mailport`
+		[ "$mail_port" = "" ] && mail_port=25
+		src_host=`rgdb -g /sys/hostName`
+		from=`rgdb -g /sys/log/email`
+		reply=`rgdb -g /sys/log/email`
+		tlogs -l $log_path > $tlog_path
+		log_state=`rgdb -i -g /runtime/syslog/full`
+		if [ "$log_state" = "1" ]; then
+			tlog_path=`rgdb -i -g /runtime/syslog/temp_log_file`
+		fi
+		/usr/sbin/smtpclient -v -s "$mail_subject" -r "$reply" -f "$from" -H "$src_host" -S "$mail_server" -P "$mail_port" "$email_addr" < $tlog_path > $smtp_msg_path &
+		if [ $log_state = 1 ]; then
+			rgdb -i -s /runtime/syslog/full 0
+			rm -f $tlog_path
+		fi
+#		logger -p 192.1 "SYS:004[$email_addr]"
+		;;
+	auth_sendmail)
+		if [ "$3" = "stop" ]; then
+			exit
+		fi
+		authenable=`rgdb -g /sys/log/emailauthenable`	
+		sendmail_pid="/var/run/sendmail.pid"
+		mail_server=`rgdb -g /sys/log/mailserver`
+		mail_port=`rgdb -g /sys/log/mailport`
+#		echo "$mail_port" > /dev/console
+		[ "$mail_port" = "" ] && mail_port=25		
+		email_addr=`rgdb -g /sys/log/email`
+		mail_subject=`rgdb -g /sys/log/subject`
+		username=`rgdb -g /sys/log/username`
+		password=`rgdb -g /sys/log/pass1`
+		from=`rgdb -g /sys/log/sender`		
+		if [ -f "$sendmail_pid" ]; then
+			PID=`cat $sendmail_pid`
+			if [ $PID != 0 ]; then
+				echo kill "$sendmail_pid" > /dev/console
+				kill $PID > /dev/console 2>&1
+			fi
+			rm -f $sendmail_pid
+		fi
+		if [ "$mail_server" != "" -a "$email_addr" != "" ]; then
+			tlogs -l $log_path > $tlog_path
+			log_state=`rgdb -i -g /runtime/syslog/full`					
+			if [ "$log_state" = "1" ]; then
+				echo "Log Full" > /dev/console
+				mail_subject="Log Message(Log full)"
+				tlog_path=`rgdb -i -g /runtime/syslog/temp_log_file`
+			fi
+			if [ "$authenable" != "0" -a "$username" != "" ]; then
+				/usr/sbin/sendmail -s "$mail_subject" -S "$mail_server" -P "$mail_port" -a "$from"  -t "$email_addr" -u "$username" -p "$password" -f "$tlog_path" &
+				echo $! > $sendmail_pid
+			else
+				/usr/sbin/sendmail -s "$mail_subject" -S "$mail_server" -P "$mail_port" -a "$from"  -t "$email_addr" -f "$tlog_path" &
+				echo $! > $sendmail_pid
+			fi
+			echo send mail to "$email_addr": "$mail_subject" > /dev/console
+			if [ "$log_state" = "1" ]; then
+				rgdb -i -s /runtime/syslog/full 0
+				rm -f $tlog_path
+			else
+				logger -p 192.1 "SYS:004[$email_addr]"
+			fi
+		fi	
+		;;
+	*)
+		echo $usage > /dev/console
+		;;
+	esac
+	;;
+*)
+	echo $usage > /dev/console
+	;;
+esac

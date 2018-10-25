@@ -1,0 +1,40 @@
+SYS:001>System started.
+SYS:002>Time synchronized at $0/$1/$2, $3:$4:$5.
+SYS:003>Log message is full, mail the message to $0.
+SYS:004>Mailed the log message to $0.
+SYS:005>WAN connected ($0).
+SYS:006>WAN disconnected ($0).
+SYS:007>MAC filter disabled.
+SYS:008>MAC filter enabled (Deny).
+SYS:009>MAC filter enabled (Allow).
+SYS:010>URL blocking disabled.
+SYS:011>URL blocking enabled (Deny).
+SYS:012>URL blocking enabled (Allow).
+SYS:013>Domain blocking disabled.
+SYS:014>Domain blocking enabled (Deny).
+SYS:015>Domain blocking enabled (Allow).
+SYS:016>VPN ($0) Pass-Through enabled.
+SYS:017>VPN ($0) Pass-Through disabled.
+SYS:018>DMZ enabled ($0).
+SYS:019>DMZ disabled.
+SYS:020>Remote management is enabled at port $0.
+SYS:021>Remote management is disabled.
+SYS:022>Block WAN PING is enabled.
+SYS:023>Block WAN PING is disabled.
+SYS:024>Peer failed to respond to CHAP challenge.
+SYS:025>CHAP peer authentication succeeded.
+SYS:026>CHAP peer authentication failed.
+SYS:027>CHAP authentication succeeded.
+SYS:028>CHAP authentication failed.
+SYS:029>No response to PAP authenticate-requests.
+SYS:030>PAP authentication failed due to protocol-reject.
+SYS:031>PAP authentication of peer failed (protocol-reject).
+SYS:032>PAP peer authentication succeeded.
+SYS:033>PAP peer authentication failed.
+SYS:034>PAP authentication succeeded.
+SYS:035>PAP authentication failed.
+SYS:036>Web management password changed.
+SYS:037>Updating dynamic DNS information to $0.
+SYS:038>Log message was cleared.
+SYS:039>Access Control disabled.
+SYS:040>Access Control enabled, one or more Internet access policies are in effect.

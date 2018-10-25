@@ -1,0 +1,28 @@
+#!/bin/sh
+echo [$0]: ifname[$1] device[$2] speed[$3] ip[$4] remote[$5] param[$6] > /dev/console
+# Check if WAN down is in progress
+while [ -f /var/run/wan_down_running ]; do
+	echo "[$0] wan down is running, wait 1 sec !!!" > /dev/console
+	sleep 1
+done
+# Clear, it's our turn.
+echo "running" > /var/run/wan_down_running
+
+WANIF="/runtime/wan/inf:1"
+rm -f /var/etc/ppp/resolv.conf.$6 > /dev/console
+rgdb -i -s $WANIF/connectstatus disconnected
+#rgdb -i -s $WANIF/ip ""
+#rgdb -i -s $WANIF/netmask ""
+#rgdb -i -s $WANIF/gateway ""
+#rgdb -i -s $WANIF/primarydns ""
+#rgdb -i -s $WANIF/secondarydns ""
+rgdb -i -s $WANIF/domain ""
+rgdb -i -s $WANIF/interface ""
+rgdb -i -s $WANIF/uptime ""
+rgdb -i -s $WANIF/sessionid ""
+rgdb -i -s $WANIF/mtu ""
+
+rgdb -A /etc/templates/ppp/session_down.php > /var/run/session_down.sh
+sh /var/run/session_down.sh $6 > /dev/console
+rm -f /var/run/wan_down_running
+exit 0

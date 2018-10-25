@@ -1,0 +1,57 @@
+StuffIt (tm) for Linux and Solaris installation
+
+This document gives general installation instructions for installing the StuffIt
+(stuff and unstuff) utilities on Linux and Solaris.
+
+When you install utilities from the tarball(s), you have a choice of where to
+install the files, however you may need to take care of the PATH environment
+variable if you install in a location other than those recommended below.
+
+The following files are contained in the tarball:
+
+stuff
+    ./bin/register
+    ./bin/stuff
+    ./doc/stuff/INSTALL
+    ./doc/stuff/LICENSE
+    ./doc/stuff/README
+    ./doc/stuff/stuff.html
+    ./man/man1/stuff.1
+
+unstuff
+    ./bin/unstuff
+    ./doc/unstuff/INSTALL
+    ./doc/unstuff/LICENSE
+    ./doc/unstuff/README
+    ./doc/unstuff/unstuff.html
+    ./man/man1/unstuff.1
+
+We recommend installing these files in /usr/ or /usr/local/. (You may have to login
+as root.) Change to the directory where you want to install the files.
+    cd <install directory>
+
+To install stuff and unstuff utilities from the tarballs:
+    gunzip <tarball.tar.gz>
+    tar -xvf <tarball.tar>
+    rm -f tarball.tar
+
+If your version of tar supports a -z option, you can decompress gzip and untar in
+one operation, without an intermediate file:
+    tar -xzvf <tarball.tar.gz>
+
+
+
+Setting up the user environment
+
+To use the stuff and unstuff utilities, make sure that the user environment is
+set up correctly. The following environment variable should be set:
+
+PATH:
+    Should contain the location where the programs stuff and unstuff are in the
+    file system. In the recommended installation the /usr/bin/ or /usr/local/bin/
+    directory should already be included.
+
+Copyright (c)2001 Aladdin Systems, Inc. All Rights Reserved.
+
+$Id: INSTALL,v 1.2 2001/06/28 22:37:33 serge Exp $
+

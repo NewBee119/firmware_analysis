@@ -1,0 +1,25 @@
+<?
+	$upnp_enable = get("x","/upnp/enable");
+	$mc_enable = get("x","/nat/general/igmpproxy/enable");
+
+	echo "<misc_config>";
+	echo 	"<wan_port_ping_response_enable>".$wan_ping_enable."</wan_port_ping_response_enable>";
+	echo	"<remote_http_management>";
+	echo		"<enable>".$enable."</enable>";
+	echo		"<port>".$port."</port>";
+	echo		"<ip_range>".$ip_range."</ip_range>";
+	echo		"<schedule_name>".$schedule_name."</schedule_name>";
+	echo	"</remote_http_management>";
+	echo 	"<multicast_stream_enable>".$mc_enable."</multicast_stream_enable>";
+	echo	"<pptp_pass_through>".$pptp_pass_through."</pptp_pass_through>";
+	echo	"<l2tp_pass_through>".$l2tp_pass_through."</l2tp_pass_through>";
+	echo	"<ipsec_pass_through>".$ipsec_pass_through."</ipsec_pass_through>";
+	echo 	"<upnp>";
+	echo 		"<enable>".$upnp_enable."</enable>";
+	echo		"<friendly_name>".$friendly_name."</friendly_name>";
+	echo		"<manufacturer>".$manufacturer."</manufacturer>";
+	echo		"<model_name>".$model_name."</model_name>";
+	echo		"<model_url>".$model_url."</model_url>";
+	echo 	"</upnp>";
+	echo "</misc_config>";
+?>

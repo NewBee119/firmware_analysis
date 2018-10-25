@@ -1,0 +1,206 @@
+<?
+	$wlan_enable = get("x","/wireless/enable");	
+	$wlan_name = get("x","/runtime/layout/wlanif");
+	$wlan_ssid = get("x","/wireless/ssid");
+	$wlan_chnl = get("x","/wireless/channel");
+	$wlan_auto_chnl = get("x","/wireless/autochannel");
+	$wlan_ssid_broadcast = get("x","/wireless/ssidhidden");
+
+	/*wlan channel*/
+	if($wlan_chnl == "0" || $wlan_auto_chnl == "1") //Auto
+	{
+		$wlan_auto_chnl = "1";
+		$wlan_chnl = get("x","/runtime/stats/wireless/channel");
+	}
+	else
+	{
+		$wlan_auto_chnl = "0";
+	}
+
+	/*wlan security*/
+	$wlan_encrypt  = get("x","/wireless/encrypttype");
+	$wlan_auth = get("x","/wireless/authtype");
+	$wlan_weplen = get("x","/wireless/wep/length");
+	if($wlan_encrypt == "0")
+	{
+		$wlan_security = "Disable";		
+	}
+	else if($wlan_encrypt == "1")
+	{
+		$enc = "wep";
+		if($wlan_auth == "0")
+		{
+			$auth = "open";
+		}
+		else if($wlan_auth == "1")
+		{
+			$auth = "shared";
+		}
+		if($wlan_weplen == "64")
+		{
+			$len = "64";
+		}
+		else if($wlan_weplen == "128")
+		{
+			$len = "128";
+		}
+		$wlan_security = $enc."_".$auth."_".$len;
+	}
+	else if($wlan_auth == "2") //wpa
+	{
+		$wlan_security = "wpa_eap";
+	}
+	else if($wlan_auth == "4") //wpa2
+	{
+		$wlan_security = "wpa2_eap";
+	}
+	else if($wlan_auth == "3") //wpa-psk
+	{
+		$wlan_security = "wpa_psk";
+	}
+	else if($wlan_auth == "5") //wpa2-psk
+	{
+		$wlan_security = "wpa2_psk";
+	}
+	else if($wlan_auth == "6") //wpa+wpa2
+	{
+		$wlan_security = "wpaauto_eap";
+	}
+	else if($wlan_auth == "7") //wpa-psk/wpa2-psk
+	{
+		$wlan_security = "wpaauto_psk";	
+	}
+
+	$wlan_txpower = get("x","/wireless/txpower");
+	$wlan_beacon_interval = get("x","/wireless/beaconinterval");
+	$wlan_rts_threshold = get("x","/wireless/rtslength");
+	$wlan_frag_threshold = get("x","/wireless/fraglength");
+	$wlan_dtim = get("x","/wireless/dtim");
+	$wlan_short_preamble = get("x","/wireless/preamble");
+	$wlan_cts = get("x","/wireless/ctsmode");
+	$wlan_channel_bandwidth = get("x","/wireless/bandwidth");
+	$wlan_guard_interval = get("x","/wireless/shortguardinterval");
+
+
+	$wlan_tx_packet = get("x","/runtime/stats/wireless/tx/packets");
+	$wlan_rx_packet = get("x","/runtime/stats/wireless/rx/packets");
+	$wlan_tx_bytes = get("x","/runtime/stats/wireless/tx/bytes");
+	$wlan_rx_bytes = get("x","/runtime/stats/wireless/rx/bytes");
+	$wlan_wmm_enable = get("x","/wireless/wmm");
+	$wlan_partition_enable = 0;
+
+	$support11n = get("x","/runtime/func/ieee80211n");
+	$wlanMode = get("x","/wireless/wlanmode");
+	$mcsAuto = get("x","/wireless/mcs/auto");
+	$mcsIndex = get("x","/wireless/mcs/index");
+
+	echo "<wlan_stats>";
+	echo 	"<wlan_enable>".$wlan_enable."</wlan_enable>";
+	echo	"<wlan_name>".$wlan_name."</wlan_name>";
+	echo 	"<wlan_ssid>".$wlan_ssid."</wlan_ssid>";
+	echo 	"<wlan_dot11d_enable>".$wlan_dot11d_enable."</wlan_dot11d_enable>";
+	echo 	"<wlan_channel_list>".$wlan_channel_list."</wlan_channel_list>";
+	echo    "<wlan_channel>".$wlan_chnl."</wlan_channel>";
+	echo	"<wlan_auto_channel_enable>".$wlan_auto_chnl."</wlan_auto_channel_enable>";
+	echo 	"<wlan_dot11_mode>";
+	map("/wireless/wlanmode",
+	    "1","11b",
+    	"2","11g",
+	    "3","11bg",
+	    "4","11n",
+	    "5","11nb",
+	    "6","11ng",
+	    "7","11bgn",
+	    "*","");
+	echo 	"</wlan_dot11_mode>";
+	echo	"<wlan_ssid_broadcast>".$wlan_ssid_broadcast."</wlan_ssid_broadcast>";
+	echo	"<wlan_mode>".$wlan_mode."</wlan_mode>";
+	echo	"<wlan_idle_time>".$wlan_idle_time."</wlan_idle_time>";
+	echo 	"<wlan_security>".$wlan_security."</wlan_security>";
+	echo	"<wlan_auto_txrate>".$wlan_auto_txrate."</wlan_auto_txrate>";
+	echo 	"<wlan_txrate>";
+	if($support11n != "1")
+	{
+		map("/wireless/txrate",
+			"0","Auto",
+			"1","1",
+			"2","2",
+			"3","5.5",
+			"4","6",
+			"5","9",
+			"6","11",
+			"7","12",
+			"8","18",
+			"9","24",
+			"10","36",
+			"11","48",
+			"12","54");
+	}
+	else
+	{
+		if($wlanMode == "4")
+		{
+			if($mcsAuto == "1")
+			{
+				echo "Auto";
+			}
+			else
+			{
+				echo "MCS".$mcsIndex;
+			}
+		}
+		else if($wlanMode == "2")
+		{
+			map("/wireless/txrate",
+				"0","Auto",
+				"1","6",
+				"2","9",
+				"3","12",
+				"4","18",
+				"5","24",
+				"6","36",
+				"7","48",
+				"8","54");
+		}
+		else if($wlanMode == "1")
+		{
+			map("/wireless/txrate",
+				"0","Auto",
+				"1","1",
+				"2","2",
+				"3","5.5",
+				"4","11");
+		}
+		else //other mix mode
+		{
+			echo "Auto";
+		}
+
+	}
+	echo 	"</wlan_txrate>";
+	echo	"<wlan_txpower>".$wlan_txpower."</wlan_txpower>";
+	echo	"<wlan_beacon_interval>".$wlan_beacon_interval."</wlan_beacon_interval>";
+	echo	"<wlan_rts_threshold>".$wlan_rts_threshold."</wlan_rts_threshold>";
+	echo	"<wlan_fragmentation_threshold>".$wlan_frag_threshold."</wlan_fragmentation_threshold>";
+	echo	"<wlan_dtim>".$wlan_dtim."</wlan_dtim>";
+	echo	"<wlan_short_preamble>".$wlan_short_preamble."</wlan_short_preamble>";
+	echo	"<wlan_cts>".$wlan_cts."</wlan_cts>";
+	echo	"<wlan_wmm_enable>".$wlan_wmm_enable."</wlan_wmm_enable>";
+	echo	"<wlan_protection>".$wlan_protection."</wlan_protection>";
+	echo 	"<wlan_11n_protection>".$wlan_11n_protection."</wlan_11n_protection>";
+	echo	"<wlan_amsdu>".$wlan_amsdu."</wlan_amsdu>";
+	echo	"<wlan_channel_bandwidth>".$wlan_channel_bandwidth."</wlan_channel_bandwidth>";
+	echo	"<wlan_guard_interval>".$wlan_guard_interval."</wlan_guard_interval>";
+	echo	"<wlan_ext_subchannel>".$wlan_ext_subchannel."</wlan_ext_subchannel>";
+	echo	"<wlan_antenna_control>".$wlan_antenna_control."</wlan_antenna_control>";
+	echo 	"<wlan_partition_enable>".$wlan_partition_enable."</wlan_partition_enable>";
+	echo 	"<wlan_tx_packets>".$wlan_tx_packet."</wlan_tx_packets>";
+	echo 	"<wlan_rx_packets>".$wlan_rx_packet."</wlan_rx_packets>";
+	echo	"<wlan_lost_packets>".$wlan_lost_packets."</wlan_lost_packets>";
+	echo	"<wlan_collision_packets>".$wlan_collision_packets."</wlan_collision_packets>";
+	echo	"<wlan_tx_bytes>".$wlan_tx_bytes."</wlan_tx_bytes>";
+	echo	"<wlan_rx_bytes>".$wlan_rx_bytes."</wlan_rx_bytes>";
+	echo	"<timestamp>".$timestamp."</timestamp>";
+	echo "</wlan_stats>";
+
+?>

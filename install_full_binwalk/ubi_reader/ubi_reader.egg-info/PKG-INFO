@@ -1,0 +1,12 @@
+Metadata-Version: 1.1
+Name: ubi-reader
+Version: 0.6.0
+Summary: Extract files from UBI and UBIFS images.
+Home-page: https://github.com/jrspruitt/ubi_reader
+Author: Jason Pruitt
+Author-email: jrspruitt@gmail.com
+License: GNU GPL
+Description: Collection of Python scripts for reading information about and extracting data from UBI and UBIFS images.
+Keywords: UBI UBIFS
+Platform: Linux
+Requires: lzo

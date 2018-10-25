@@ -1,0 +1,17 @@
+<HTML>
+<HEAD>
+<TITLE><?=$title?></TITLE>
+<link rel="stylesheet" href="../comm/webCSS.css" type="text/css">
+<META HTTP-EQUIV=Content-Type CONTENT="no-cache">
+<META HTTP-EQUIV=Content-Type CONTENT="text/html; charset=iso-8859-1">
+<script>
+function init()
+{
+	var d = new Date();
+	var str=d.getFullYear()+"."+(d.getMonth()+1)+"."+d.getDate()+"."+d.getHours()+"."+d.getMinutes()+"."+d.getSeconds();
+	self.location.href="/version.php?random_str="+str;
+}
+</script>
+</HEAD>
+<body bgcolor=#FFFFFF text="#000000" topmargin=0 onload="init();">
+</body></html>

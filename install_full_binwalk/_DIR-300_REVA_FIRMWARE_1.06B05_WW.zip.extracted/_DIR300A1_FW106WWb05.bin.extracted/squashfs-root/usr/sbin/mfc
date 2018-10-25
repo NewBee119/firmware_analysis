@@ -1,0 +1,164 @@
+#!/bin/sh
+RGENV=`cat /etc/config/nvram`
+BDCFG=`cat /etc/config/nvram`
+
+case "$1" in
+save)
+	/etc/scripts/misc/profile.sh put
+	;;
+init)
+	LANMAC=`echo -e $2 | tr [A-Z] [a-z]`
+	WANMAC=`echo -e $3 | tr [A-Z] [a-z]`
+	HWREV=`echo -e $4 | tr [a-z] [A-Z]`
+	CCODE="$5"
+	PIN="$6"
+	KEY="$7"
+	if [ "$LANMAC" != "" ]; then
+		BDCMD="$BDCMD -e wlan0Mac=$LANMAC"
+		RGCMD="$RGCMD -e lanmac=$LANMAC -e wlanmac=$LANMAC"
+	fi
+	if [ "$WANMAC" != "" ]; then
+		BDCMD="$BDCMD -e enet0Mac=$WANMAC"
+		RGCMD="$RGCMD -e wanmac=$WANMAC"
+	fi
+	[ "$HWREV" = "" ] && HWREV="D2"
+	[ "$CCODE" = "" ] && CCODE=840
+	[ "$PIN" != "" ] && RGCMD="$RGCMD -e pin=$PIN"
+	[ "$KEY" != "" ] && RGCMD="$RGCMD -e key=$KEY"
+	/etc/templates/wlan.sh stop
+	echo "bdtool reset -d $BDCFG $BDCMD" > /dev/console
+	echo "rgcfg setenv -n $RGENV -e countrycode=$CCODE -e hwrev=$HWREV $RGCMD -f" > /dev/console
+	echo 1 > /proc/spiflash/pp_enable
+	bdtool reset -d $BDCFG $BDCMD
+	rgcfg setenv -n $RGENV -e countrycode=$CCODE -e hwrev=$HWREV $RGCMD -f
+	echo 0 > /proc/spiflash/pp_enable
+	;;
+wlan)
+	rgdb -s /wireless/enable 1
+	rgdb -s /wireless/ssid "$2"
+	rgdb -s /wireless/channel "$3"
+	rgdb -s /wireless/authtype 0
+	rgdb -s /wireless/encrypttype 0
+	/etc/templates/wlan.sh restart
+	;;
+gethwrev)
+	rgcfg getenv -n $RGENV -e hwrev
+	;;
+getwanmac)
+	rgcfg getenv -n $RGENV -e wanmac
+	;;
+getlanmac)
+	rgcfg getenv -n $RGENV -e lanmac
+	;;
+getwlanmac)
+	rgcfg getenv -n $RGENV -e wlanmac
+	;;
+getcountrycode)
+	rgcfg getenv -n $RGENV -e countrycode
+	;;
+getpin)
+	rgcfg getenv -n $RGENV -e pin
+	;;
+getkey)
+	rgcfg getenv -n $RGENV -e key
+	;;
+getwlan)
+	SSID=`rgdb -g /wireless/ssid`
+	CHANNEL=`rgdb -g /wireless/channel`
+	echo "SSID=$SSID"
+	echo "Channel=$CHANNEL"	
+	;;
+ver)
+	/etc/scripts/misc/ver.sh
+	;;
+clear)
+	echo "ffff" > $BDCFG
+	;;
+freset)
+	case $2 in
+	enable)
+		fresetd &
+		;;
+	disable)
+		killall fresetd
+		;;
+	"")
+		/etc/scripts/misc/profile.sh reset
+		/etc/scripts/misc/profile.sh put
+		;;
+	esac
+	;;
+button)
+	case $2 in
+	reset)
+		echo 0 > /proc/ar231x/gpio_cr6
+		cat /proc/ar231x/gpio_6
+		;;
+	wps)
+		echo 0 > /proc/ar231x/gpio_cr4
+		cat /proc/ar231x/gpio_4
+		;;
+	esac
+	;;
+led)
+	case "$2" in
+	wps_blue)
+		echo 1 > /proc/ar231x/gpio_cr1
+		echo 1 > /proc/ar231x/gpio_1
+		;;
+	wps_red)
+		echo 1 > /proc/ar231x/gpio_cr3
+		echo 1 > /proc/ar231x/gpio_3
+		;;
+	status)
+		echo 1 > /proc/ar231x/gpio_cr7
+		echo 1 > /proc/ar231x/gpio_7
+		;;
+	wlan)
+		echo 1 > /proc/ar231x/gpio_cr2
+		echo 1 > /proc/ar231x/gpio_2
+		;;
+	off)
+		echo 0 > /proc/ar231x/gpio_1
+		echo 0 > /proc/ar231x/gpio_3
+		echo 0 > /proc/ar231x/gpio_7
+		echo 0 > /proc/ar231x/gpio_2
+		;;
+	esac
+	;;
+*)
+	echo "Usage: mfc {command} <params>"
+	echo "Commands:"
+	echo "  init <lanmac> <wanmac> <hwrev> <countrycode> <pin> <wpa-key>"
+	echo "                           Init flash"
+	echo "  save                     Save current setting to flash"
+	echo ""
+	echo "  wlan <ssid> <channel>    switch ssid and channel"
+	echo ""
+	echo "  gethwrev                 Get H/W revision"
+	echo "  getwanmac                Get current WAN mac address"
+	echo "  getlanmac                Get current LAN mac address"
+	echo "  getcountrycode           Get current country code"
+	echo "  getpin                   Get PIN"
+	echo "  getkey                   Get WPA-KEY"
+	echo "  ver                      Show firmware version"
+	echo ""
+	echo "  clear                    Clear radio config"
+	echo ""
+	echo "  freset                   Factory reset"
+	echo "  freset {enable|disable}  Enable/disable factory reset button."
+	echo "                           Note: You need to disable freset before button/led test."
+	echo ""
+	echo "  button {reset|wps}"
+	echo "      reset                Get factory reset button status."
+	echo "      wps                  Get WPS button status."
+	echo ""
+	echo "  led {off|wps_blue|wps_red|status|wlan}"
+	echo "      off                  Turn off all the leds under test."
+	echo "      wps_blue             Turn on WPS blue led."
+	echo "      wps_red              Turn on WPS red led."
+	echo "      status               Turn on status led."
+	echo "      wlan                 Turn on wlan led."
+	;;
+esac
+exit 0

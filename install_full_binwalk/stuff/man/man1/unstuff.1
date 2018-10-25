@@ -1,0 +1,138 @@
+.PU
+.TH UNSTUFF 1 "$Date: 2001/03/15 08:02:24 $" Linux
+
+.SH NAME
+unstuff \- expand many compressed and encoded formats
+
+.SH SYNOPSIS
+.B unstuff
+.B [ POSIX or GNU style options ]
+[
+.I "archive \&..."
+]
+
+.PP
+where
+.I "archive \&..."
+is one or more parameters listing archives to expand.
+
+.SH DESCRIPTION
+.I unstuff
+is an application that expands archives and decodes encoded files in 
+multiple compressed and encoded formats. It is a command-line utility that 
+uses the StuffIt Engine shared library. 
+
+.PP
+.I unstuff
+takes a list of archives on its command line and expands each one in sequence.
+.I unstuff
+detects input formats automatically. It recognizes archives and encoded 
+files by analyzing their contents instead of relying on file name extensions 
+such as
+.B "\&.sit"
+or
+.B "\&.gz".
+
+.PP
+.I unstuff
+can currently decompress files created by
+.I StuffIt, zip, Arc, Arj, gzip, UNIX compress, PrivateFile
+and decode files in
+.I uuencode, BinHex, btoa, btoa5, MIME, and MacBinary formats.
+
+.SH OPTIONS
+Command-line options are distinguished from arguments (archive names) by 
+one or two dashes.
+.I Short
+(one-character) options are preceded by one dash,
+.I long
+(multi-character) options are preceded by two dashes. Some options have 
+only short or a long form; some have both. Options are listed in 
+alphabetical order. 
+
+.TP
+.B \-d=[directory] --destination=[directory]
+Sets the destination directory for expanded files. Default:
+.B .
+
+.TP
+.B \-e=[option] --eol=[option]
+Selects one of the following text type options, represented by [option]: 
+.B native, win, windows, crlf, unix, lf, mac, macintosh, cr.
+Default:
+.B native.
+
+.TP
+.B --formats
+Shows archive formats supported by
+.B unstuff
+and the StuffIt Engine. Default:
+.B [no].
+
+.TP
+.B \-m=[option] --macbinary=[option]
+Selects one of the following MacBinary output options, represented by [option]:
+.B off, no, on, yes, or auto.
+Default:
+.B off.
+
+.TP
+.B \-p=[password] --password=[password]
+Sets the password to be used in the operation.
+Default:
+.B none.
+
+.TP
+.B \-q --quiet
+Suppresses all messages normally printed during operation.
+Default:
+.B [no].
+
+.TP
+.B \-t=[option] --text=[option]
+Selects one of the following text conversion options, represented by 
+[option]:
+.B off, no, on, yes, or auto.
+Default:
+.B off.
+
+.TP
+.B \-v --version
+Shows
+.I unstuff
+and StuffIt Engine version information. Default:
+.B [no].
+
+.SH EXAMPLES
+.TP
+.B unstuff archive.sit
+Expands an archive named
+.I archive.sit.
+
+.TP
+.B unstuff --destination=/var/tmp archive.sit
+Expands an archive named
+.I archive.sit
+and places expanded files into
+.I /var/tmp.
+
+.TP
+.B unstuff --text=auto --eol=unix archive.sit
+Expands an archive named
+.I archive.sit,
+converting text files to Unix format (LF end-of-lines).
+
+.TP
+.B unstuff --password=abcdef archive.sit
+Expands an archive named
+.I archive.sit,
+decrypting its contents with the password
+.I abcdef.
+
+.SH SEE ALSO
+compress(1), gunzip(1), unzip(1)
+
+.SH DIAGNOSTICS
+Exit status is normally 0;
+if an error occurs, exit status is 1 or 2.
+

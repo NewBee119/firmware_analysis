@@ -1,0 +1,13 @@
+<?
+	$dmz_p = "/nat/dmzsrv/";
+	echo "<dmz>";
+	echo	"<dmz_enable>".get("x", $dmz_p."enable")."</dmz_enable>";
+	echo	"<dmz_ip>".get("x", $dmz_p."ip")."</dmz_ip>";
+	$dmz_sch = get("x", $dmz_p."schedule/id");
+	if($dmz_sch == "")
+	{
+		$dmz_sch = "Always";
+	}
+	echo	"<dmz_schedule>".$dmz_sch."</dmz_schedule>";
+	echo "</dmz>";
+?>

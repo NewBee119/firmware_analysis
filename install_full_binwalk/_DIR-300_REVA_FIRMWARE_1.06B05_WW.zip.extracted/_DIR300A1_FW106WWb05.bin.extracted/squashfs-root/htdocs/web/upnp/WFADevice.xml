@@ -1,0 +1,42 @@
+<? /* vi: set sw=4 ts=4: */
+$ipaddr	= query("/runtime/upnpdev/host");
+$port	= query("/runtime/upnpdev/port");
+$vendor	= query("/sys/vendor");
+$model	= query("/sys/modelname");
+$url	= query("/sys/url");
+$sn		= "000000001";
+$udn	= "uuid:".query("/runtime/upnpdev/root:2/uuid");
+
+$modeldesc = $vendor." ".$model;
+
+echo "<\?xml version=\"1.0\" encoding=\"utf-8\"?\>";
+?>
+<root xmlns="urn:schemas-upnp-org:device-1-0">
+	<specVersion>
+		<major>1</major>
+		<minor>0</minor>
+	</specVersion>
+	<URLBase>http://<?=$ipaddr?>:<?=$port?></URLBase>
+	<device>
+		<deviceType>urn:schemas-wifialliance-org:device:WFADevice:1</deviceType>
+		<friendlyName><?=$model?></friendlyName>
+		<manufacturer><?=$vendor?></manufacturer>
+		<manufacturerURL><?=$url?></manufacturerURL>
+		<modelDescription><?=$modeldesc?></modelDescription>
+		<modelName><?=$model?></modelName>
+		<modelNumber>1</modelNumber>
+		<modelURL><?=$url?></modelURL>
+		<serialNumber><?=$sn?></serialNumber>
+		<UDN><?=$udn?></UDN>
+		<serviceList>
+			<service>
+				<serviceType>urn:schemas-wifialliance-org:service:WFAWLANConfig:1</serviceType>
+				<serviceId>urn:wifialliance-org:serviceId:WFAWLANConfig1</serviceId>
+				<controlURL>/wfadev.cgi?service=WFAWLANConfig1</controlURL>
+				<eventSubURL>/WFAWLANConfig1.upnp</eventSubURL>
+				<SCPDURL>/xmldoc/WFAWLANConfig.xml</SCPDURL>
+			</service>
+		</serviceList>
+		<presentationURL>http://<?=$ipaddr?></presentationURL>
+	</device>
+</root>

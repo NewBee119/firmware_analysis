@@ -1,0 +1,26 @@
+<?
+/*
+* Created by Kwest Wan 20071012
+* to support D-Link widget login check
+*/
+$xml_head = fread("/www/widget/__login_head.php");
+$file = "/var/run/password";
+$password = query("/sys/user:1/password");
+fwrite($file, $password);
+fwrite("/var/run/hash", $hash);
+$ver = query("/widget/version");
+//Run login check according to the version
+$logined = query("/runtime/widget".$ver."/logincheck");
+if($logined == "OK")
+{
+	$response = "OK"; 
+}
+else
+{
+	$response = "error";
+}
+echo $xml_head;
+echo "<login>";
+echo $response;
+echo "</login>";
+?>

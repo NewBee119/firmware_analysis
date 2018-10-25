@@ -1,0 +1,47 @@
+#!/bin/sh
+usage="Usage: diagnostic [-g|-s] [xml node] {value}"
+npath="/runtime/diagnostic"
+case "$1" in
+-g)
+	echo [$0] get from script is deprecated !! > /dev/console
+	;;
+-s)
+	case "$2" in
+	pingip)
+		lip=`rgdb -g /lan/ethernet/ip`
+		wip=`rgdb -i -g /runtime/wan/inf:1/ip`
+		wanstat=`rgdb -i -g /runtime/switch/wan_port/linktype`
+
+#sam_pan add		
+		wan_inf_mode=`rgdb -g /wan/rg/inf:1/mode`
+		if [ "$wan_inf_mode" = "6" ]; then
+			wanstat= 1
+		fi
+			
+		rgdb -i -s $npath/pingResult 1
+		if [ "$3" = "$lip" -o "$3" = "$wip" -o "$3" = "127.0.0.1" ]; then
+			rgdb -i -s $npath/pingResult 2
+		elif [ "$wanstat" = "0" ]; then
+			rgdb -i -s $npath/pingResult 1
+		elif [ "$3" != "" ]; then
+			result=`ping $3 | grep "is alive"`
+			if [ "$result" != "" ]; then
+				rgdb -i -s $npath/pingResult 2
+			fi
+		fi
+		;;
+	arpping)
+		LANIF=`rgdb -i -g /runtime/layout/lanif`
+		MAC=`arpping -i "$LANIF" -t "$3"`
+		rgdb -i -s $npath/arpping "$MAC"
+		;;
+	*)
+		echo $usage > /dev/console
+		;;
+	esac
+	;;
+*)
+	echo $usage > /dev/console
+	;;
+esac
+exit 0

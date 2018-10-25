@@ -1,0 +1,33 @@
+#!/bin/sh
+# Cable test for WAN. See 'switch' for Port Mapping
+usage="Usage cabletest:1 [-g|-s] [xml node] {value}"
+vctfile="/var/run/port1.vct"
+case "$1" in
+"-g")
+	case "$2" in
+	"txstatus")
+		[ -f "$vctfile" ] && scut -p 'TXSTATUS=' $vctfile
+		;;
+	"txmeter")
+		[ -f "$vctfile" ] && scut -p 'TXMETER=' $vctfile
+		;;
+	"rxstatus")
+		[ -f "$vctfile" ] && scut -p 'RXSTATUS=' $vctfile
+		;;
+	"rxmeter")
+		[ -f "$vctfile" ] && scut -p 'RXMETER=' $vctfile
+		;;
+	esac
+	;;
+"-s")
+	[ -f "$vctfile" ] && rm -f "$vctfile"
+	ctest -i 4 > $vctfile
+	rgdb -i -s /runtime/cabletest:1/txstatus	`scut -p 'TXSTATUS=' $vctfile`
+	rgdb -i -s /runtime/cabletest:1/txmeter		`scut -p 'TXMETER=' $vctfile`
+	rgdb -i -s /runtime/cabletest:1/rxstatus	`scut -p 'RXSTATUS=' $vctfile`
+	rgdb -i -s /runtime/cabletest:1/rxmeter		`scut -p 'RXMETER=' $vctfile`
+	;;
+*)
+	echo $usage
+	;;
+esac

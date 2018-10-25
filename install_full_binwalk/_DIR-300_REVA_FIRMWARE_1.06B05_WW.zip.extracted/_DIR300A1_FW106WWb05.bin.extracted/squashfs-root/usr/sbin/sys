@@ -1,0 +1,85 @@
+#!/bin/sh
+if [ -f /etc/config/rgdb ]; then
+	nvram=`cat /etc/config/rgdb`
+else
+	nvram=`cat /etc/config/nvram`
+fi
+image_sign=`cat /etc/config/image_sign`
+usage="Usage: sys [-g|-s] [xml node] {value}"
+case "$1" in
+-g)
+	echo [$0] get from script is deprecated !! > /dev/console
+	;;
+-s)
+	case "$2" in
+	configsave)
+		rgcfg get -n $nvram -c /var/rgdb.xml.gz
+		echo -ne "$image_sign\0" > /var/config.bin
+		cat /var/rgdb.xml.gz >> /var/config.bin
+		rm -f /var/rgdb.xml.gz
+		;;
+	restart)
+		/etc/templates/wan.sh stop
+		/etc/scripts/misc/nreboot.sh 3 &
+		;;
+	configrestore)
+		;;
+	factoryreset)
+		/etc/templates/wan.sh stop
+		/etc/scripts/misc/profile.sh reset
+		/etc/scripts/misc/profile.sh put
+		/etc/scripts/misc/nreboot.sh 3 &
+		;;
+	fwinfo)
+		srv=`rgdb -g /sys/fwinfosrv`
+		reqstr=`rgdb -g /sys/fwinfopath`
+		reqstr="GET $reqstr HTTP/1.1
+Accept: */*
+User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)
+Host: $srv
+Connection: Close
+
+"
+		rm -f /var/run/fwinfo.html
+		tcprequest "$reqstr" "$srv" 80 -f /var/run/fwinfo.html -t 5 -s
+		fwInt=`scut -p fwInternal= /var/run/fwinfo.html`
+		fwExt=`scut -p fwExternal= /var/run/fwinfo.html`
+		fwURL=`scut -p fwURL= /var/run/fwinfo.html`
+		if [ "$fwInt" != "" ]; then
+			xmldbc -i -s /runtime/sys/fwinfo/SIGNATURE		"$image_sign"
+			xmldbc -i -s /runtime/sys/fwinfo/MAJVERSION		"$fwExt"
+			xmldbc -i -s /runtime/sys/fwinfo/MINVERSION		""
+			xmldbc -i -s /runtime/sys/fwinfo/BUILDNUMBER	"$fwInt"
+			xmldbc -i -s /runtime/sys/fwinfo/FIRMWAREURL	"$fwURL"
+		else
+			xmldbc -i -s /runtime/sys/fwinfo/SIGNATURE		""
+			xmldbc -i -s /runtime/sys/fwinfo/MAJVERSION		""
+			xmldbc -i -s /runtime/sys/fwinfo/MINVERSION		""
+			xmldbc -i -s /runtime/sys/fwinfo/BUILDNUMBER	""
+			xmldbc -i -s /runtime/sys/fwinfo/FIRMWAREURL	""
+		fi
+		;;
+	check_fw)
+		model=`rgdb -g /sys/modelname`
+		srv=`rgdb -g /sys/fwinfosrv`
+		reqstr=`rgdb -g /sys/fwinfopath`
+		reqstr=$reqstr"?model=$model\_$3"
+
+		reqstr="GET $reqstr HTTP/1.1
+Accept:*/*
+User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)
+Host: $srv
+Connection: Close
+
+"
+		rm -f /var/www/fwinfo.xml
+		[ -d /var/www ] || mkdir -p /var/www
+		tcprequest "$reqstr" "$srv" 80 -f /var/www/fwinfo.xml -t 5 -s
+		;;
+	esac
+	;;
+*)
+	echo $usage > /dev/console
+	;;
+esac
+exit 0

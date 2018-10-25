@@ -1,0 +1,28 @@
+<?
+	$dhcpd_enable = get("x","/lan/dhcp/server/enable");
+	$dhcpd_start_ip = get("x","/lan/dhcp/server/pool:1/startip");
+	$dhcpd_end_ip = get("x","/lan/dhcp/server/pool:1/endip");
+	$dhcpd_lease_time = get("x","/lan/dhcp/server/pool:1/leasetime");
+	$dhcpd_domain_name = get("x","/lan/dhcp/server/pool:1/domain");
+	$dhcpd_primary_dns = get("x","/lan/dhcp/server/pool:1/primarydns");
+	$dhcpd_secondary_dns = get("x","/lan/dhcp/server/pool:1/secondarydns");
+
+	echo "<dhcp_server>";
+	echo 	"<dhcpd_enable>".$dhcpd_enable."</dhcpd_enable>";
+	echo	"<dhcpd_start_ip>".$dhcpd_start_ip."</dhcpd_start_ip>";
+	echo	"<dhcpd_end_ip>".$dhcpd_end_ip."</dhcpd_end_ip>";
+	echo	"<dhcpd_lease_time>".$dhcpd_lease_time."</dhcpd_lease_time>";
+	echo	"<dhcpd_domain_name>".$dhcpd_domain_name."</dhcpd_domain_name>";
+	echo	"<dhcpd_primary_dns>".$dhcpd_primary_dns."</dhcpd_primary_dns>";
+	echo	"<dhcpd_secondary_dns>".$dhcpd_secondary_dns."</dhcpd_secondary_dns>";
+	echo	"<dhcpd_reservation>".$dhcpd_reservation."</dhcpd_reservation>";
+	for("/runtime/dhcpserver/lease")
+	{
+		echo	"<dhcpd_leased_entry>";
+		echo		"<name>".get("x","hostname")."</name>";
+		echo		"<ip>".get("x","ip")."</ip>";
+		echo		"<mac>".get("x","mac")."</mac>";
+		echo	"</dhcpd_leased_entry>";
+	}
+	echo "</dhcp_server>";
+?>

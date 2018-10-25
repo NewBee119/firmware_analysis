@@ -1,0 +1,107 @@
+<?
+	/*0: disconnect, 1:100Full, 2: 100half, 3: 10 full, 4: 10half*/
+	$port1_link = get("x","/runtime/switch/port:1/linktype");
+	$port2_link = get("x","/runtime/switch/port:2/linktype");
+	$port3_link = get("x","/runtime/switch/port:3/linktype");
+	$port4_link = get("x","/runtime/switch/port:4/linktype");
+	$wan_link = get("x","/runtime/switch/wan_port");
+
+	if($wan_link == "0")
+	{
+		$wan_status = "Disconnected";
+	}
+	else if($wan_link == "1")
+	{
+		$wan_status = "100M";
+	}
+	else if($wan_link == "2")
+	{
+		$wan_status = "100M";
+	}
+	else if($wan_link == "3")
+	{
+		$wan_status = "10M";
+	}
+	else if($wan_link == "4")
+	{
+		$wan_status = "10M";
+	}
+	if($port1_link == 0)
+	{
+		$port1_status = "Disconnected";
+	}
+	else
+	{
+		$port1_status = "Connected";
+	}
+	if($port2_link == 0)
+	{
+		$port2_status = "Disconnected";
+	}
+	else
+	{
+		$port2_status = "Connected";
+	}
+	if($port3_link == 0)
+	{
+		$port3_status = "Disconnected";
+	}
+	else
+	{
+		$port3_status = "Connected";
+	}
+	if($port4_link == 0)
+	{
+		$port4_status = "Disconnected";
+	}
+	else
+	{
+		$port4_status = "Connected";
+	}
+
+	$lan_mac = get("x","/runtime/layout/lanmac");
+	$wan_mac = get("x","/runtime/wan/inf:1/mac");
+	$product_name = get("x","/sys/modelname");
+
+	echo "<system_info>";
+	echo 	"<vendor_name>".$vendor_name."</vendor_name>";
+	echo 	"<product_name>".$product_name."</product_name>";
+	echo 	"<device_name>".$device_name."</device_name>";
+	echo	"<hardware_version>".$hardware_version."</hardware_version>";
+	echo	"<firmware_version_major>".$firmware_version_major."</firmware_version_major>";
+	echo	"<firmware_version_minor>".$firmware_version_minor."</firmware_version_minor>";
+	echo	"<firmware_version_build>".$firmware_version_build."</firmware_version_build>";
+	echo	"<firmware_url>".$firmware_url."</firmware_url>";
+	echo	"<frimware_update_info_url>".$firmware_update_info_url."</frimware_update_info_url>";
+	echo	"<firmware_notify_enable>".$firmware_notify_enable."</firmware_notify_enable>";
+	echo	"<firmware_notify_interval>".$firmware_notify_interval."</firmware_notify_interval>";
+	echo	"<multi_language>".$multi_language."</multi_language>";
+	echo	"<multi_language_selection>".$multi_language_selection."</multi_language_selection>";
+	echo 	"<lan_mac>".$lan_mac."</lan_mac>";
+	echo	"<wan_mac>".$wan_mac."</wan_mac>";
+	echo	"<wan_clone_mac_enable>".$wan_clone_mac_enable."</wan_clone_mac_enable>";
+	echo	"<wan_cloned_mac>".$wan_cloned_mac."</wan_cloned_mac>";
+	echo	"<wan_config_port_speed>".$wan_config_port_speed."</wan_config_port_speed>";
+	echo 	"<switch_port_status>";
+	echo 		"<name>LAN0</name>";
+	echo 		"<status>".$port1_status."</status>";
+	echo 	"</switch_port_status>";
+	echo 	"<switch_port_status>";
+	echo 		"<name>LAN1</name>";
+	echo    	"<status>".$port2_status."</status>";
+	echo 	"</switch_port_status>";
+	echo 	"<switch_port_status>";
+	echo 		"<name>LAN2</name>";
+	echo 		"<status>".$port3_status."</status>";
+	echo 	"</switch_port_status>";
+	echo 	"<switch_port_status>";
+	echo 		"<name>LAN3</name>";
+	echo    	"<status>".$port4_status."</status>";
+	echo 	"</switch_port_status>";
+	echo 	"<switch_port_status>";
+	echo		"<name>WAN0</name>";
+	echo		"<status>".$wan_status."</status>";
+	echo 	"</switch_port_status>";
+	echo	"<system_time>".$system_time."</system_time>";
+	echo "</system_info>";
+?>

@@ -1,0 +1,63 @@
+<?
+	$qos_enable = get("x","/qos/mode");
+	$qos_rules = get("x", "/qos/max_rules");
+	echo "<qos>";
+	echo 	"<qos_enable>".$qos_enable."</qos_enable>";
+	echo	"<qos_traffic_shapping_enable>".$qos_traffic_shapping_enable."</qos_traffic_shapping_enable>";
+	echo	"<qos_auto_classify_enable>".$qos_auto_classify_enable."</qos_auto_classify_enable>";
+	$inx = 0;
+	while($inx < $qos_rules)
+	{
+		echo	"<qos_rule_".$inx.">";
+		$tempPath = "/qos/entry:".$inx+1."/";
+		echo		"<enable>".get("x", $tempPath."enable")."</enable>";
+		echo		"<name>".get("x", $tempPath."description")."</name>";
+		echo		"<priority>".get("x", $tempPath."priority")."</priority>";
+		echo		"<protocol_type>"."BOTH"."</protocol_type>";
+		$ip_type = get("x", $tempPath."iptype");
+		if($ip_type == 2)
+		{
+			$ip_range = get("x", $tempPath."startip")."-".get("x", $tempPaht."endip");
+		}
+		echo		"<local_ip_range>".$ip_range."</local_ip_range>";
+		$port_type = get("x", $tempPath."porttype");
+		if($port_type == 2)
+		{
+			$port_range = get("x", $tempPath."startport")."-".get("x", $tempPath."endport");
+		}
+		echo		"<local_port_range>".$port_range."</local_port_range>";
+		echo		"<remote_ip_range>".$remote_ip_range."</remote_ip_range>";
+		echo		"<remote_port_range>".$remote_port_range."</remote_port_range>";
+		echo	"</qos_rule_".$inx.">";
+		$inx++;
+	}
+	echo	"<wmm_enable>".$wmm_enable."</wmm_enable>";
+	echo	"<wlan_qos_auto_classify_enable>".$wlan_qos_en."</wlan_qos_auto_classify_enable>";
+	$inx = 0;
+	while($inx < $qos_rules)
+	{
+		echo	"<wlan_qos_rule_".$inx.">";
+		$tempPath = "/qos/entry:".$inx+1."/";
+		echo		"<enable>".get("x", $tempPath."enable")."</enable>";
+		echo		"<name>".get("x", $tempPath."description")."</name>";
+		echo		"<priority>".get("x", $tempPath."priority")."</priority>";
+		echo		"<protocol_type>"."BOTH"."</protocol_type>";
+		$ip_type = get("x", $tempPath."iptype");
+		if($ip_type == 2)
+		{
+			$ip_range = get("x", $tempPath."startip")."-".get("x", $tempPaht."endip");
+		}
+		echo		"<local_ip_range>".$ip_range."</local_ip_range>";
+		$port_type = get("x", $tempPath."porttype");
+		if($port_type == 2)
+		{
+			$port_range = get("x", $tempPath."startport")."-".get("x", $tempPath."endport");
+		}
+		echo		"<local_port_range>".$port_range."</local_port_range>";
+		echo		"<remote_ip_range>".$remote_ip_range."</remote_ip_range>";
+		echo		"<remote_port_range>".$remote_port_range."</remote_port_range>";
+		echo	"</wlan_qos_rule_".$inx.">";
+		$inx++;
+	}
+	echo "</qos>";
+?>

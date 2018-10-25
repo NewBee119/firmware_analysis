@@ -1,0 +1,43 @@
+<?
+$m_context_title_ium	= "Internet Usage Meter";
+$m_enable_ium	= "Enable Internet Usage Meter";
+$m_counting_from= "Start Traffic Counting from";
+$m_month		= "Month";
+$m_day			= "Day";
+$m_hour			= "Hour";
+$m_start_date	= "Start Date/Time";
+$m_current_date = "Current(s) Date/Time";
+$m_period		= "Counting Period";
+$m_conn_time	= "Connection Time(hh:mm:ss)";
+$m_upload		= "Upload(Mbytes)";
+$m_download		= "Download(Mbytes)";
+$m_total		= "Total(Mbytes)";
+$m_today		= "Today";
+$m_yesterday	= "Yesterday";
+$m_thisweek		= "This Week";
+$m_thismonth	= "This Month";
+$m_lastmonth	= "Last Month";
+$m_context_title_tc		= "Internet Traffic Control/Notification";
+$m_enable_tc	= "Enable Traffic Control/Notification";
+$m_download_tc	= "Download Volume Control";
+$m_upload_tc	= "Upload Volume Control";
+$m_no_limit		= "No Limit";
+$m_limit		= "Limit";
+$m_mbytes		= "Mbytes";
+$m_discon_internet	= "Disconnect the Internet Connection when the Limit is Reached";
+$m_web_notify	= "Enable Web Notification";
+$m_download_thres	= "Download Volume Threshold";
+$m_upload_thres		= "Upload Volume Threshold";
+$m_email_notify		= "Enable Email Notification";
+$m_by			= "by";
+$m_hours		= "Hour(s)";
+$m_days			= "Day(s)";
+$m_months		= "Month(s)";
+$m_email_setting = "Email Settings";
+
+$a_start_time_bigger_current_time = "The start date must be later than the current time.";
+$a_must_be_integer	= "This field must be an integer.";
+$a_period_should_be_1_to_23 = "The value range is 1 ~ 23 Hour(s).";
+$a_period_should_be_1_to_31 = "The value range is 1 ~ 31 Day(s).";
+$a_period_should_be_1_to_12 = "The value range is 1 ~ 12 Month(s).";
+?>
